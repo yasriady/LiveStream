@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@color/colorRow"
+    android:orientation="horizontal"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/colorRow"
+        android:orientation="horizontal">
+        >
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/colorBackground"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/no_image" />
+
+            <TextView
+                android:id="@+id/tvLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:background="@drawable/back2"
+                android:text="LIVE"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="10">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/imageButton"
+                android:text="Video Title"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_toLeftOf="@+id/imageButton" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="12dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentTop="true"
+                android:background="@null"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_more_vert" />
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:text="HH:MM:SS"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/pagar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_toEndOf="@+id/duration"
+                android:text=" | "
+                android:textSize="12sp"
+                android:layout_toRightOf="@+id/duration" />
+
+            <TextView
+                android:id="@+id/views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_toEndOf="@+id/pagar1"
+                android:text="-9999 views"
+                android:textSize="12sp"
+                android:layout_toRightOf="@+id/pagar1" />
+
+            <TextView
+                android:id="@+id/pagar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_toEndOf="@+id/views"
+                android:text=" | "
+                android:textSize="12sp"
+                android:layout_toRightOf="@+id/views" />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_toEndOf="@+id/pagar2"
+                android:text="8.5"
+                android:textSize="12sp"
+                android:layout_toRightOf="@+id/pagar2" />
+
+            <TextView
+                android:id="@+id/publishedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/duration"
+                android:text="yyyy-mm-dd HH:MM:SS"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/channel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/publishedAt"
+                android:text="Video channel"
+                android:textSize="12sp"
+                android:layout_alignParentLeft="false" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/channel"
+                android:text="Description"
+                android:textSize="12sp"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/slash1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/publishedAt"
+                android:layout_toEndOf="@+id/channel"
+                android:layout_toRightOf="@+id/channel"
+                android:text=" / "
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/video_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/publishedAt"
+                android:layout_toEndOf="@+id/slash1"
+                android:layout_toRightOf="@+id/slash1"
+                android:text="video_id"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

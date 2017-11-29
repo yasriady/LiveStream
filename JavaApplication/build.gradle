@@ -1,0 +1,19 @@
+apply plugin: 'java-library'
+
+// Ddy: for Youtube
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Ddy: Youtube
+    compile 'com.google.apis:google-api-services-youtube:v3-rev187-1.23.0'
+    implementation files('libs/google-oauth-client-jetty-1.22.0.jar')
+    implementation files('libs/google-oauth-client-1.23.0.jar')
+    implementation files('libs/google-oauth-client-java6-1.23.0.jar')
+    implementation files('libs/google-http-client-jackson2-1.20.0.jar')
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

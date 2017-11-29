@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">LiveStream</string>
+    <string name="player_error">Error initializing YouTube player: %s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="live_now">Live Now</string>
+    <string name="newest">Newest</string>
+    <string name="popular">Popular</string>
+    <string name="more_ustadz">More Ustadz</string>
+    <string name="editor_choice">Editor Choice</string>
+    <string name="search">Search</string>
+
+    <!-- AdMob ad unit IDs -->
+
+    <string name="app_id">ca-app-pub-0333447002362481~3199593854</string>
+    <string name="admob_banner">ca-app-pub-0333447002362481/1259826220</string>
+    <string name="admob_interstitial">ca-app-pub-0333447002362481/9417394130</string>
+
+</resources>
