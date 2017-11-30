@@ -1,10 +1,13 @@
 package org.yasriady.livestream.Utility;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.yasriady.livestream.Ads.Ads;
 import org.yasriady.livestream.Cfg;
+import org.yasriady.livestream.MyApp;
 
 import java.util.ArrayList;
 
@@ -32,8 +35,10 @@ public class RemoteConfig {
 
     RemoteConfigListener m_listener;
     private DownloadFileFromUrl m_downloader;
+    private Context m_context;
 
-    public RemoteConfig(RemoteConfigListener listener) {
+    public RemoteConfig(Context context,  RemoteConfigListener listener) {
+        m_context = context;
         this.m_listener = listener;
     }
 
@@ -178,7 +183,8 @@ public class RemoteConfig {
     }
 
     public final String getServer() {
-        return m_serverList.get(0);
+        int serverIdx = (int)MyApp.getInstance().getPref(m_context).get(Cfg.SERVER_INDEX, 0);
+        return m_serverList.get(serverIdx);
     }
 
     public Ads.Adstype getAdsType() {

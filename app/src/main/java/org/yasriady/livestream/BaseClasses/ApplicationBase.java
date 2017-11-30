@@ -34,7 +34,7 @@ public class ApplicationBase extends Application {
 
     private final String MY_PREFS_NAME = "MyPrefsFile";
 
-    private SharedPreferences sharedPrefs() {
+    public SharedPreferences sharedPrefs() {
         SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         return sharedPrefs;
     }
@@ -53,6 +53,18 @@ public class ApplicationBase extends Application {
         editor.putBoolean(prefName, value);
         editor.apply();
     }
+
+    public int getSharedPrefInt(final String prefName, int var2) {
+        int result = sharedPrefs().getInt(prefName, var2);
+        return result;
+    }
+
+    public void setSharedPrefInt(String prefName, int value) {
+        SharedPreferences.Editor editor = sharedPrefsEditor();
+        editor.putInt(prefName, value);
+        editor.apply();
+    }
+
 
     // SharedPreferences :: end ----------------------------------------------------------------
 

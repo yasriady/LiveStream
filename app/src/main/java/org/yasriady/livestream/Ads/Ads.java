@@ -77,9 +77,9 @@ public class Ads extends LinearLayout {
         m_adView = findViewById(R.id.adView);
         m_adView.setAdListener(new MyAdMobListener());
 
-        boolean bDevelMode = MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
+        boolean bDevelMode = MyApp.getInstance().getPref( getContext() ).get(Cfg.DEVELOPMENT_MODE, true);  //MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
         AdRequest adRequest = null;
-        final String TESTDEVICESTR = "629A74973A0DBC5A96E944CA1C0AE432";// From my device Advance i5C
+        final String TESTDEVICESTR = Cfg.TEST_DEVICE_ID;  // "629A74973A0DBC5A96E944CA1C0AE432";// From my device Advance i5C
 
         //AdRequest adRequest = new AdRequest.Builder().build();
         if (bDevelMode) {   // Development mode

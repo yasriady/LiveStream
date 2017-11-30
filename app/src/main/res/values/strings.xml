@@ -17,5 +17,12 @@
     <string name="app_id">ca-app-pub-0333447002362481~3199593854</string>
     <string name="admob_banner">ca-app-pub-0333447002362481/1259826220</string>
     <string name="admob_interstitial">ca-app-pub-0333447002362481/9417394130</string>
+    <string name="video_thumbnail">Video thumbnail</string>
+    <string name="live">LIVE</string>
+    <string name="video_title">Video Title</string>
+    <string name="menu">Menu</string>
+    <string name="hh_mm_ss">HH:MM:SS</string>
+    <string name="pagar"> | </string>
+    <string name="_9999_views">-9999 views</string>
 
 </resources>

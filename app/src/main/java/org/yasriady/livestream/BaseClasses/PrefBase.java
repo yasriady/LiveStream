@@ -1,5 +1,6 @@
 package org.yasriady.livestream.BaseClasses;
 
+import android.content.Context;
 import android.database.Cursor;
 
 import org.yasriady.livestream.MyDB;
@@ -13,8 +14,12 @@ import java.util.List;
 public class PrefBase {
 
     private MyDB m_db;
+    protected Context m_context;
 
-    public PrefBase(MyDB db) {
+    public PrefBase(){}
+
+    public PrefBase(Context context,MyDB db) {
+        m_context = context;
         m_db = db;
     }
 
@@ -49,10 +54,25 @@ public class PrefBase {
 
         String value = String.valueOf(defValue);
         String str = get(key, value);
-        double result = 0;
+        double result = defValue;
 
         try {
             result = Double.parseDouble(str);
+        } catch (NumberFormatException ex) {
+            // Ddy: Please do exception handling here
+        }
+
+        return result;
+    }
+
+    public boolean get(final String key, final boolean defValue) {
+
+        String value = String.valueOf(defValue);
+        String str = get(key, value);
+        boolean result = defValue;
+
+        try {
+            result = Boolean.parseBoolean(str);
         } catch (NumberFormatException ex) {
             // Ddy: Please do exception handling here
         }
@@ -69,6 +89,11 @@ public class PrefBase {
     }
 
     public void set(final String key, final double value) {
+        String str = String.valueOf(value);
+        set(key, str);
+    }
+
+    public void set(final String key, final boolean value) {
         String str = String.valueOf(value);
         set(key, str);
     }

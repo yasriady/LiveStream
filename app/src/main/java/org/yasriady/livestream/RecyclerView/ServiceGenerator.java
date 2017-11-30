@@ -12,10 +12,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    private static final String URL = "http://192.168.43.117/livestream/record/"; // Jangan LUPA tanda / diakhir url
+    //private static final String URL = "http://192.168.43.117/livestream/record/"; // Jangan LUPA tanda / diakhir url
     // http://www.sab99r.com/demos/api/
 
-    public static <S> S createService(Class<S> serviceClass) {
+    //public static <S> S createService(Class<S> serviceClass) {
+    public static <S> S createService(Class<S> serviceClass, String server) {
+
+        if (server.lastIndexOf("/") != (server.length() - 1)) {
+            server = server + "/";
+        }
+        server = server + "livestream/record/";
 
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
@@ -24,7 +30,7 @@ public class ServiceGenerator {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(/*URL*/ server)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient).build();
 

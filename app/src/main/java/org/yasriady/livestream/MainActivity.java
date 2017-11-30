@@ -1,6 +1,7 @@
 package org.yasriady.livestream;
 
 import android.Manifest;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import org.yasriady.livestream.Player.FacebookFragment;
 import org.yasriady.livestream.Ads.Ads;
 import org.yasriady.livestream.Player.Intro.IntroFragment;
 import org.yasriady.livestream.RecyclerView.VideosAdapter;
+import org.yasriady.livestream.Utility.PrefDialog;
 import org.yasriady.livestream.Utility.Permission2;
 import org.yasriady.livestream.Utility.RemoteConfig;
 import org.yasriady.livestream.Player.YoutubeFragment;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         MyRemoteConfigListener listener = new MyRemoteConfigListener();
         //m_rc = new RemoteConfig(listener);
         //m_rc.begin();
-        (new RemoteConfig(listener)).begin();
+        (new RemoteConfig(this, listener)).begin();
 
         m_statusbar = findViewById(R.id.statusbar);
         m_statusbar.setVisibility(View.GONE);
@@ -90,7 +92,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     private void onBtnMore() {
-        toggleDevelMode();
+        MyPref2 pref = MyApp.getInstance().getPref(this);
+        pref.show(new PrefDialog.DismissHandler() {
+            @Override
+            public void onDialogDismissed() {
+                restartApplication();
+            }
+        });
+
     }
 
     private void toggleDevelMode() {
@@ -101,7 +110,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     private void setDevelMode() {
-        boolean develMode = MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
+
+        MyPref2 pref = MyApp.getInstance().getPref(this);
+
+
+
+        boolean develMode = pref.get( Cfg.DEVELOPMENT_MODE, true ) ;//MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
         if (develMode) {
             m_btnMore.setBackgroundColor(getResources().getColor(R.color.red));
         } else {
@@ -328,6 +342,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     protected void onResume() {
         super.onResume();
         if (m_ads != null) m_ads.onResume();
+    }
+
+    private void restartApplication() {
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }
 

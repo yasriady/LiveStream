@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.yasriady.livestream.Model.Model4.VideoModel4;
+import org.yasriady.livestream.MyApp;
 import org.yasriady.livestream.R;
 import org.yasriady.livestream.RecyclerView.OnLoadMoreListener;
 import org.yasriady.livestream.RecyclerView.ServiceGenerator;
@@ -72,7 +73,9 @@ public class Base extends Fragment{
         m_recyclerView.addItemDecoration(new VerticalLineDecorator(2));
         m_recyclerView.setAdapter(m_adapter);
 
-        m_api = ServiceGenerator.createService(VideosApi.class);
+        String server = MyApp.getInstance().getRc().getServer();
+
+        m_api = ServiceGenerator.createService(VideosApi.class, server);
         load(0);
 
     }

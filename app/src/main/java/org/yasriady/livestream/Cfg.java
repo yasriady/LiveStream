@@ -7,10 +7,14 @@ package org.yasriady.livestream;
 public class Cfg {
 
     public static final String REMOTE_PREF_FILE = "https://raw.githubusercontent.com/yasriady/dbstore/master/app/LiveStream/preference.json";
+
     public static final int NUM_VIDEOS = 25;
     public static String DBNAME = "db.sqlite";
 
     public static final String DEVELOPMENT_MODE = "developmentMode";
+    public static final String SERVER_INDEX = "serverIndex";
+
+    public static final String TEST_DEVICE_ID = "629A74973A0DBC5A96E944CA1C0AE432";
 
     public static enum Category {
 

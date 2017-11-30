@@ -13,7 +13,7 @@ public class MyApp extends ApplicationBase {
 
     private static MyApp m_instance;
     private MyDB m_db;
-    private MyPref m_pref;
+    private MyPref2 m_pref;
     protected RemoteConfig m_rc;
 
     public MyApp() {
@@ -38,14 +38,14 @@ public class MyApp extends ApplicationBase {
         return m_db;
     }
 
-    public MyPref getPref(/*final String keyPrefix*/) {
+    public MyPref2 getPref(Context context) {
         if (m_pref == null) {
-            m_pref = new MyPref(m_db/*, keyPrefix*/);
+            m_pref = new MyPref2(context, getDb());
         }
         return m_pref;
     }
 
-// x_
+// x_ TAK BOLEH DIGUNAKAN PADA class Application
 //    @Override
 //    public void onTerminate() {
 //        super.onTerminate();
