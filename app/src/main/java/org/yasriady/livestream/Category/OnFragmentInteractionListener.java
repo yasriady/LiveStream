@@ -6,6 +6,8 @@ package org.yasriady.livestream.Category;
 
 import android.net.Uri;
 
+import org.yasriady.livestream.Player.*;
+
 /**
  * This interface must be implemented by activities that contain this
  * fragment to allow an interaction in this fragment to be communicated
@@ -19,4 +21,5 @@ import android.net.Uri;
 public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     void onFragmentInteraction(Uri uri);
+    //void onFragmentInteraction(org.yasriady.livestream.Player.Base fragment);
 }

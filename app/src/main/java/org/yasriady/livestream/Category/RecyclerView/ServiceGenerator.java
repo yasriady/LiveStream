@@ -1,4 +1,4 @@
-package org.yasriady.livestream.RecyclerView;
+package org.yasriady.livestream.Category.RecyclerView;
 
 import java.util.concurrent.TimeUnit;
 

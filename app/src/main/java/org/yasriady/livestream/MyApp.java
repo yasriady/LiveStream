@@ -39,9 +39,12 @@ public class MyApp extends ApplicationBase {
     }
 
     public MyPref2 getPref(Context context) {
-        if (m_pref == null) {
+
+        MainActivity mainActivity = (MainActivity) context;
+        if (m_pref == null || mainActivity.isFinishing()) {
             m_pref = new MyPref2(context, getDb());
         }
+
         return m_pref;
     }
 

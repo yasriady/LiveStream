@@ -1,10 +1,10 @@
 package org.yasriady.livestream;
 
 import android.Manifest;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,19 +25,25 @@ import org.yasriady.livestream.Category.NewestFragment;
 import org.yasriady.livestream.Category.SearchFragment;
 import org.yasriady.livestream.Content.SlidingTabLayout;
 import org.yasriady.livestream.Model.Model4.VideoModel4;
+import org.yasriady.livestream.OnlineCount.OnlineCount;
 import org.yasriady.livestream.Player.FacebookFragment;
 import org.yasriady.livestream.Ads.Ads;
 import org.yasriady.livestream.Player.Intro.IntroFragment;
-import org.yasriady.livestream.RecyclerView.VideosAdapter;
+import org.yasriady.livestream.Category.RecyclerView.VideosAdapter;
 import org.yasriady.livestream.Utility.PrefDialog;
 import org.yasriady.livestream.Utility.Permission2;
 import org.yasriady.livestream.Utility.RemoteConfig;
 import org.yasriady.livestream.Player.YoutubeFragment;
 import org.yasriady.livestream.Utility.Statusbar;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 // Thumbnail youtube is here https://stackoverflow.com/a/2068371/3626789
 // https://img.youtube.com/vi/<insert-youtube-video-id-here>/hqdefault.jpg
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, VideosAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener,
+        VideosAdapter.OnItemClickListener, IntroFragment.OnIntroFragmentLoadedListener
+
+{
 
     private Button m_btnPlayFacebook, m_btnPlayYoutube;
     private YoutubeFragment m_youtubeFragment;
@@ -65,10 +71,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private ImageButton m_btnMore;
 
+    private OnlineCount m_onlineCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        showView(false);
+        m_onlineCount = new OnlineCount();
 
         m_permission = new Permission2(this);
         m_permission.checkPermission();
@@ -91,12 +102,28 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     }
 
+    private void showView(final boolean show) {
+        CoordinatorLayout layout = findViewById(R.id.coordinatorLayout);
+        int background, view;
+        if (show) {
+            // Restore background to normal one
+            background = R.drawable.background_normal;
+            view = View.VISIBLE;
+        } else {
+            // Set splash background
+            background = R.drawable.background_splash;
+            view = View.INVISIBLE;
+        }
+        getWindow().setBackgroundDrawableResource(background);
+        layout.setVisibility(view);
+    }
+
     private void onBtnMore() {
         MyPref2 pref = MyApp.getInstance().getPref(this);
         pref.show(new PrefDialog.DismissHandler() {
             @Override
             public void onDialogDismissed() {
-                restartApplication();
+                onPreferenceChanged();
             }
         });
 
@@ -106,16 +133,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         boolean bVal = MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
         boolean bDevelMode = !bVal;
         MyApp.getInstance().setSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, bDevelMode);
-        setDevelMode();
+        //setDevelMode();
     }
 
     private void setDevelMode() {
 
         MyPref2 pref = MyApp.getInstance().getPref(this);
 
-
-
-        boolean develMode = pref.get( Cfg.DEVELOPMENT_MODE, true ) ;//MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
+        boolean develMode = pref.get(Cfg.DEVELOPMENT_MODE, true);//MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
         if (develMode) {
             m_btnMore.setBackgroundColor(getResources().getColor(R.color.red));
         } else {
@@ -162,6 +187,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     }
 
+    @Override
+    public void onIntroFragmentLoaded() {
+        //MyApp.getInstance().toast("InfroLoaded()");
+
+    }
+
     class MyRemoteConfigListener implements RemoteConfig.RemoteConfigListener {
         @Override
         public void onRemoteConfigArrive(RemoteConfig remoteConfig) {
@@ -185,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         createCategory();
         playIntro("");
 
-        setDevelMode();
+        showView(true);
     }
 
     @Override
@@ -329,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     protected void onDestroy() {
         if (m_ads != null) m_ads.onDestroy();
+        m_onlineCount.count("down");
         super.onDestroy();
     }
 
@@ -341,14 +373,26 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     protected void onResume() {
         super.onResume();
+        m_onlineCount.count("up");
         if (m_ads != null) m_ads.onResume();
     }
 
-    private void restartApplication() {
+    private void onPreferenceChanged() {
+
+        // Alert, please restart application due to preference altered !
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(getString(R.string.alert_prefence_changed))
+                .show();
+
+        // Restart application
+        /*
+        finish();
         Intent i = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
+        */
+
     }
 }
 

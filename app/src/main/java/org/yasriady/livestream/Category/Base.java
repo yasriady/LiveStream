@@ -6,16 +6,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import org.yasriady.livestream.Model.Model4.VideoModel4;
 import org.yasriady.livestream.MyApp;
 import org.yasriady.livestream.R;
-import org.yasriady.livestream.RecyclerView.OnLoadMoreListener;
-import org.yasriady.livestream.RecyclerView.ServiceGenerator;
-import org.yasriady.livestream.RecyclerView.VerticalLineDecorator;
-import org.yasriady.livestream.RecyclerView.VideosAdapter;
-import org.yasriady.livestream.RecyclerView.VideosApi;
+import org.yasriady.livestream.Category.RecyclerView.OnLoadMoreListener;
+import org.yasriady.livestream.Category.RecyclerView.ServiceGenerator;
+import org.yasriady.livestream.Category.RecyclerView.VerticalLineDecorator;
+import org.yasriady.livestream.Category.RecyclerView.VideosAdapter;
+import org.yasriady.livestream.Category.RecyclerView.VideosApi;
 
 import java.util.ArrayList;
 import java.util.List;

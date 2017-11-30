@@ -66,6 +66,7 @@ public class IntroFragment extends Base {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private OnIntroFragmentLoadedListener m_introFragmentLoadedListener;
 
     public IntroFragment() {
         // Required empty public constructor
@@ -154,8 +155,9 @@ public class IntroFragment extends Base {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        if (context instanceof OnFragmentInteractionListener  || context instanceof OnIntroFragmentLoadedListener ) {
             mListener = (OnFragmentInteractionListener) context;
+            m_introFragmentLoadedListener = (OnIntroFragmentLoadedListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -296,6 +298,11 @@ public class IntroFragment extends Base {
 //                    m_sliderLayout.setPresetTransformer(makeTransformer());
 //                }
 //            });
+
+            // Fire event to Mainactivity, sliderImage is now ready
+            //mListener.onFragmentInteraction(uri);
+            m_introFragmentLoadedListener.onIntroFragmentLoaded();  // TAK JALAN
+
 
         }
 
@@ -493,6 +500,11 @@ public class IntroFragment extends Base {
         Call<ResponseBody> downloadFile();
 
     }
+
+    public interface OnIntroFragmentLoadedListener {
+        public void onIntroFragmentLoaded();
+    }
+
 
 }
 

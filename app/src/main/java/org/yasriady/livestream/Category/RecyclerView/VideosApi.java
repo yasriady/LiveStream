@@ -1,6 +1,5 @@
-package org.yasriady.livestream.RecyclerView;
+package org.yasriady.livestream.Category.RecyclerView;
 
-import org.yasriady.livestream.Model.Model2.VideoModel;
 import org.yasriady.livestream.Model.Model4.VideoModel4;
 
 import java.util.List;
