@@ -28,6 +28,7 @@ import org.yasriady.livestream.Category.PopularFragment;
 import org.yasriady.livestream.Category.NewestFragment;
 import org.yasriady.livestream.Category.SearchFragment;
 import org.yasriady.livestream.Content.SlidingTabLayout;
+import org.yasriady.livestream.Login.User;
 import org.yasriady.livestream.Model.Model4.VideoModel4;
 import org.yasriady.livestream.OnlineCount.OnlineCount;
 import org.yasriady.livestream.Player.FacebookFragment;
@@ -73,10 +74,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private RemoteConfig m_rc;
     private Statusbar m_statusbar;
-
     private ImageButton m_btnMore;
-
     private OnlineCount m_onlineCount;
+    private User m_user;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         showView(false);
         m_onlineCount = new OnlineCount();
+
+        m_user = new User(this);
+        MyApp.getInstance().setUser(m_user);
 
         m_permission = new Permission2(this);
         m_permission.checkPermission();
@@ -133,9 +138,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         //    }
         //});
 
-        Intent i = new Intent(MainActivity.this, MyPrefrencesActivity.class);
-        //startActivity(i);
-        startActivityForResult(i, REQUEST_PREFERENCE);
+//        Intent i = new Intent(MainActivity.this, MyPrefrencesActivity.class);
+//        //startActivity(i);
+//        startActivityForResult(i, REQUEST_PREFERENCE);
+
+        m_user.login();
+        //m_user.test();//
+
+
 
     }
 
@@ -334,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         int i = m_pages.size();
 
         if (m_rc.showCategory_HOME()) {
-            m_pages.put(i++, NewestFragment.newInstance(getResources().getString(R.string.newest), ""));
+            m_pages.put(i++, NewestFragment.newInstance(getResources().getString(R.string.home), ""));
         }
 
         if (m_rc.showCategory_NEWEST()) {

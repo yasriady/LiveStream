@@ -41,8 +41,9 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
+        <!--com.facebook.CustomTabActivity-->
         <activity
-            android:name="com.facebook.CustomTabActivity"
+            android:name=".Login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -53,8 +54,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".MyPrefrencesActivity"></activity>
+
+
+        <activity android:name=".MyPrefrencesActivity" />
+
+
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package org.yasriady.livestream;
 import android.content.Context;
 
 import org.yasriady.livestream.BaseClasses.ApplicationBase;
+import org.yasriady.livestream.Login.User;
 import org.yasriady.livestream.Utility.RemoteConfig;
 
 /**
@@ -15,6 +16,7 @@ public class MyApp extends ApplicationBase {
     private MyDB m_db;
     private MyPref2 m_pref;
     protected RemoteConfig m_rc;
+    private User m_user;
 
     public MyApp() {
         //Permission1.setPermission(this, Cfg.PERMISSIONS);  // TAK BISA
@@ -64,6 +66,19 @@ public class MyApp extends ApplicationBase {
 
     public static Context getAppContext() {
         return MyApp.getAppContext();
+    }
+
+    public void setUser(User user) {
+        m_user = user;
+    }
+
+    public User getUser() {
+        return m_user;
+    }
+
+    public String getRole() {
+        final String role = m_user.getRole();
+        return role;
     }
 
 }

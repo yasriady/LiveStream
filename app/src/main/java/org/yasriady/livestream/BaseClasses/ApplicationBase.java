@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import org.yasriady.livestream.MainActivity;
@@ -24,9 +26,14 @@ public class ApplicationBase extends Application {
     }
 
     public void snackbar(Context context, String message) {
-        MainActivity mainActivity = (MainActivity) context;
-        CoordinatorLayout coordinatorLayout = mainActivity.findViewById(R.id.coordinatorLayout);
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
+        //MainActivity mainActivity = (MainActivity) context;
+        //CoordinatorLayout coordinatorLayout = mainActivity.findViewById(R.id.coordinatorLayout);
+        //View view = mainActivity.findViewById(R.id.coordinatorLayout);
+        //Snackbar snackbar = Snackbar.make(/*coordinatorLayout*/view, message, Snackbar.LENGTH_LONG);
+
+        AppCompatActivity activity= (AppCompatActivity) context;
+        View view = activity.findViewById(android.R.id.content);
+        Snackbar snackbar = Snackbar.make(/*coordinatorLayout*/view, message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
