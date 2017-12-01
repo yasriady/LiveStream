@@ -1,8 +1,12 @@
 package org.yasriady.livestream;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
+    private static final int REQUEST_PREFERENCE = 64;
     private static final int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_WIFI_STATE};
 
@@ -119,13 +124,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     private void onBtnMore() {
-        MyPref2 pref = MyApp.getInstance().getPref(this);
-        pref.show(new PrefDialog.DismissHandler() {
-            @Override
-            public void onDialogDismissed() {
-                onPreferenceChanged();
-            }
-        });
+
+        //MyPref2 pref = MyApp.getInstance().getPref(this);
+        //pref.show(new PrefDialog.DismissHandler() {
+        //    @Override
+        //    public void onDialogDismissed() {
+        //        onPreferenceChanged();
+        //    }
+        //});
+
+        Intent i = new Intent(MainActivity.this, MyPrefrencesActivity.class);
+        //startActivity(i);
+        startActivityForResult(i, REQUEST_PREFERENCE);
 
     }
 
@@ -136,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         //setDevelMode();
     }
 
+    // x_
     private void setDevelMode() {
 
         MyPref2 pref = MyApp.getInstance().getPref(this);
@@ -217,6 +228,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         playIntro("");
 
         showView(true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_PREFERENCE) {
+
+            if (resultCode == MyPrefrencesActivity.RESULT_CODE_PREFERENCES_CHANGED) {
+                restartActivity(MainActivity.this);
+            }
+        }
+
     }
 
     @Override
@@ -310,6 +333,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private void setPages() {
         int i = m_pages.size();
 
+        if (m_rc.showCategory_HOME()) {
+            m_pages.put(i++, NewestFragment.newInstance(getResources().getString(R.string.newest), ""));
+        }
+
         if (m_rc.showCategory_NEWEST()) {
             m_pages.put(i++, NewestFragment.newInstance(getResources().getString(R.string.newest), ""));
         }
@@ -380,19 +407,20 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private void onPreferenceChanged() {
 
         // Alert, please restart application due to preference altered !
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText(getString(R.string.alert_prefence_changed))
-                .show();
+        //new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setTitleText(getString(R.string.alert_prefence_changed)).show();
 
         // Restart application
-        /*
-        finish();
-        Intent i = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(getBaseContext().getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        */
-
+        restartActivity(  MainActivity.this );
     }
+
+    private void restartActivity(Activity activity){
+        if (Build.VERSION.SDK_INT >= 11) {
+            activity.recreate();
+        } else {
+            activity.finish();
+            activity.startActivity(activity.getIntent());
+        }
+    }
+
 }
 

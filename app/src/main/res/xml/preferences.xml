@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="screenPreference">
+
+
+    <PreferenceCategory
+        android:key="catAdministrator"
+        android:title="Administrator">
+
+        <EditTextPreference
+            android:id="@+id/edServerIndex"
+            android:defaultValue="0"
+            android:key="serverIndex"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Specify server index from the list"
+            android:title="Server Index" />
+        <SwitchPreference
+            android:id="@+id/swDevelopmentMode"
+            android:defaultValue="false"
+            android:key="developmentMode"
+            android:title="Development Mode" />
+        <ListPreference
+            android:id="@+id/lstServerList"
+            android:defaultValue="1"
+            android:entries="@array/listServerEntries"
+            android:entryValues="@array/listServerValues"
+            android:key="serverAddress"
+            android:summary="Select prefered server"
+            android:title="Server" />
+        <Preference
+            android:enabled="true"
+            android:key="example_key"
+            android:selectable="false"
+            android:summary="anything_you_want"
+            android:title="example_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="catGeneral"
+        android:title="General Preferences">
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
+

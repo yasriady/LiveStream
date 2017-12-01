@@ -1,6 +1,8 @@
 package org.yasriady.livestream.Utility;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +24,7 @@ public class RemoteConfig {
     private ArrayList<String> m_serverList;
     private Ads.Adstype m_adsType;
     //x_ private String m_introUrl;
+    private boolean m_showCategory_HOME;
     private boolean m_showCategory_LIVE;
     private boolean m_showCategory_NEWEST;
     private boolean m_showCategory_POPULAR;
@@ -37,7 +40,7 @@ public class RemoteConfig {
     private DownloadFileFromUrl m_downloader;
     private Context m_context;
 
-    public RemoteConfig(Context context,  RemoteConfigListener listener) {
+    public RemoteConfig(Context context, RemoteConfigListener listener) {
         m_context = context;
         this.m_listener = listener;
     }
@@ -111,14 +114,19 @@ public class RemoteConfig {
 //                m_introUrl = obj.getString(varName);
 //            }
 
-            varName = "showLIVE";
+            varName = "showHOME";
             if (!obj.isNull(varName)) {
-                m_showCategory_LIVE = obj.getBoolean(varName);
+                m_showCategory_HOME = obj.getBoolean(varName);
             }
 
             varName = "showNEWEST";
             if (!obj.isNull(varName)) {
                 m_showCategory_NEWEST = obj.getBoolean(varName);
+            }
+
+            varName = "showLIVE";
+            if (!obj.isNull(varName)) {
+                m_showCategory_LIVE = obj.getBoolean(varName);
             }
 
             varName = "showPOPULAR";
@@ -173,17 +181,27 @@ public class RemoteConfig {
 //        return m_serverAddress;
 //    }
 
-// x_
+    // x_
 //    public boolean showBanner() {
 //        return m_showBanner;
 //    }
-
+// /data/user/0/org.yasriady.livestream/shared_prefs/org.yasriady.livestream_preferences.xml
     public ArrayList<String> getServerList() {
         return m_serverList;
     }
 
     public final String getServer() {
-        int serverIdx = (int)MyApp.getInstance().getPref(m_context).get(Cfg.SERVER_INDEX, 0);
+        int serverIdx;
+        //serverIdx = (int) MyApp.getInstance().getPref(m_context).get(Cfg.SERVER_INDEX, 0);
+        // diganti menggunakan PreferenceActivity
+        SharedPreferences SP =
+                PreferenceManager.getDefaultSharedPreferences(m_context);
+        String str = SP.getString(Cfg.SERVER_INDEX, "0");
+        serverIdx = Integer.parseInt(str);
+
+        if (serverIdx < 0 || serverIdx >= m_serverList.size()) {
+            serverIdx = 0;
+        }
         return m_serverList.get(serverIdx);
     }
 
@@ -200,12 +218,16 @@ public class RemoteConfig {
 //        return m_introUrl;
 //    }
 
-    public boolean showCategory_LIVE() {
-        return m_showCategory_LIVE;
+    public boolean showCategory_HOME() {
+        return m_showCategory_HOME;
     }
 
     public boolean showCategory_NEWEST() {
         return m_showCategory_NEWEST;
+    }
+
+    public boolean showCategory_LIVE() {
+        return m_showCategory_LIVE;
     }
 
     public boolean showCategory_POPULAR() {

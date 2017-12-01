@@ -1,6 +1,8 @@
 package org.yasriady.livestream.Ads;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -77,7 +79,13 @@ public class Ads extends LinearLayout {
         m_adView = findViewById(R.id.adView);
         m_adView.setAdListener(new MyAdMobListener());
 
-        boolean bDevelMode = MyApp.getInstance().getPref( getContext() ).get(Cfg.DEVELOPMENT_MODE, true);  //MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
+        boolean bDevelMode;
+        //bDevelMode = MyApp.getInstance().getPref(getContext()).get(Cfg.DEVELOPMENT_MODE, true);  //MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
+        // pindah menggunakan preference activity
+        SharedPreferences SP =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
+        bDevelMode = SP.getBoolean(Cfg.DEVELOPMENT_MODE, true);
+
         AdRequest adRequest = null;
         final String TESTDEVICESTR = Cfg.TEST_DEVICE_ID;  // "629A74973A0DBC5A96E944CA1C0AE432";// From my device Advance i5C
 
