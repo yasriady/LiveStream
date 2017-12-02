@@ -21,4 +21,8 @@ public class Base extends Fragment {
         MyApp.getInstance().snackbar(getContext(), message);
     }
 
+    public UserModel getUserModel() {
+        return m_userModel;
+    }
+
 }

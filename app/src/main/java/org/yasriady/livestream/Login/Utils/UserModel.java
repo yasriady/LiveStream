@@ -72,6 +72,37 @@ public class UserModel {
     @SerializedName("ts")
     @Expose
     private String ts;
+    @SerializedName("ts")
+    @Expose
+    private String remark;
+
+    public UserModel(){}
+
+    public UserModel(UserModel userModel) {
+        this.id = userModel.getId();
+        this.appId = userModel.getAppId();
+        this.userid = userModel.getUserid();
+        this.password = userModel.getPassword();
+        this.provider = userModel.getProvider();
+        this.name = userModel.getName();
+        this.firstname = userModel.getFirstname();
+        this.lastname = userModel.getLastname();
+        this.email = userModel.getEmail();
+        this.gender = userModel.gender;
+        this.birthday = userModel.getBirthday();
+        this.businessName = userModel.getBusinessName();
+        this.hpNo = userModel.getHpNo();
+        this.location = userModel.getLocation();
+        this.pictureUrl = userModel.getPictureUrl();
+        this.privilegeId = userModel.getPrivilegeId();
+        this.currentRoleId = userModel.getCurrentRoleId();
+        this.role = userModel.getRole();
+        this.enable = userModel.getEnable();
+        this.privileges = userModel.getPrivileges();
+        this.ts = userModel.getTs();
+        this.remark = userModel.getRemark();
+
+    }
 
     public String getId() {
         return id;
@@ -239,6 +270,14 @@ public class UserModel {
 
     public void setTs(String ts) {
         this.ts = ts;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
 }

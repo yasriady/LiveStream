@@ -32,6 +32,17 @@
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/no_image" />
 
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="3dp"
+                android:background="@drawable/border_duration"
+                android:text="@string/hh_mm_ss"
+                android:textColor="@android:color/background_light"
+                android:textSize="12sp" />
+
         </FrameLayout>
 
         <RelativeLayout
@@ -41,24 +52,8 @@
             android:layout_marginStart="5dp"
             android:layout_weight="10">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/imageButton"
-                android:layout_toStartOf="@+id/imageButton"
-                android:text="@string/video_title"
-                android:textColor="#333333"
-                android:textSize="14sp" />
-
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/btnMenu"
                 android:layout_width="12dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
@@ -70,11 +65,29 @@
                 app:srcCompat="@drawable/ic_more_vert" />
 
             <TextView
-                android:id="@+id/duration"
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/btnMenu"
+                android:layout_toStartOf="@+id/btnMenu"
+                android:text="@string/video_title"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/publishedAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
                 android:layout_below="@+id/title"
-                android:text="@string/hh_mm_ss"
+                android:text="yyyy-mm-dd HH:MM:SS"
                 android:textSize="12sp" />
 
             <TextView
@@ -82,8 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:layout_toEndOf="@+id/duration"
-                android:layout_toRightOf="@+id/duration"
+                android:layout_toRightOf="@+id/publishedAt"
                 android:text=" | "
                 android:textSize="12sp" />
 
@@ -115,16 +127,6 @@
                 android:layout_toEndOf="@+id/pagar2"
                 android:layout_toRightOf="@+id/pagar2"
                 android:text="8.5"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/publishedAt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/duration"
-                android:text="yyyy-mm-dd HH:MM:SS"
                 android:textSize="12sp" />
 
             <TextView
@@ -172,22 +174,6 @@
                 android:text="Description"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tvLive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false"
-                android:layout_below="@+id/description"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="1dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginStart="1dp"
-                android:background="@drawable/back2"
-                android:text="@string/live"
-                android:textColor="@color/red"
-                android:textSize="12sp" />
         </RelativeLayout>
 
 

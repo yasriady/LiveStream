@@ -35,10 +35,20 @@
             android:summary="anything_you_want"
             android:title="example_title" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="catGeneral"
         android:title="General Preferences">
 
+        <Preference
+            android:id="@+id/preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:key="example_key"
+            android:selectable="false"
+            android:summary="We are on beta version. Please use the application as usual and feedback us about your concern."
+            android:title="Name" />
     </PreferenceCategory>
 
 

@@ -3,45 +3,43 @@ package org.yasriady.livestream;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
-import org.yasriady.livestream.Category.MoreUstadzFragment;
-import org.yasriady.livestream.Category.NOT_USED.CustomViewPager;
+import org.yasriady.livestream.Ads.Ads;
 import org.yasriady.livestream.Category.EditorChoiceFragment;
 import org.yasriady.livestream.Category.LiveFragment;
+import org.yasriady.livestream.Category.MoreUstadzFragment;
+import org.yasriady.livestream.Category.NOT_USED.CustomViewPager;
 import org.yasriady.livestream.Category.NOT_USED.MyPagerAdapter;
+import org.yasriady.livestream.Category.NewestFragment;
 import org.yasriady.livestream.Category.OnFragmentInteractionListener;
 import org.yasriady.livestream.Category.PopularFragment;
-import org.yasriady.livestream.Category.NewestFragment;
+import org.yasriady.livestream.Category.RecyclerView.VideosAdapter;
 import org.yasriady.livestream.Category.SearchFragment;
 import org.yasriady.livestream.Content.SlidingTabLayout;
 import org.yasriady.livestream.Login.User;
 import org.yasriady.livestream.Model.Model4.VideoModel4;
 import org.yasriady.livestream.OnlineCount.OnlineCount;
 import org.yasriady.livestream.Player.FacebookFragment;
-import org.yasriady.livestream.Ads.Ads;
 import org.yasriady.livestream.Player.Intro.IntroFragment;
-import org.yasriady.livestream.Category.RecyclerView.VideosAdapter;
-import org.yasriady.livestream.Utility.PrefDialog;
-import org.yasriady.livestream.Utility.Permission2;
-import org.yasriady.livestream.Utility.RemoteConfig;
 import org.yasriady.livestream.Player.YoutubeFragment;
+import org.yasriady.livestream.Utility.MyImageButton;
+import org.yasriady.livestream.Utility.Permission2;
+import org.yasriady.livestream.Utility.PrefDialog;
+import org.yasriady.livestream.Utility.RemoteConfig;
 import org.yasriady.livestream.Utility.Statusbar;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 // Thumbnail youtube is here https://stackoverflow.com/a/2068371/3626789
 // https://img.youtube.com/vi/<insert-youtube-video-id-here>/hqdefault.jpg
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
-    private static final int REQUEST_PREFERENCE = 64;
     private static final int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_WIFI_STATE};
 
@@ -74,11 +71,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private RemoteConfig m_rc;
     private Statusbar m_statusbar;
-    private ImageButton m_btnMore;
+    private MyImageButton m_btnMore;
     private OnlineCount m_onlineCount;
     private User m_user;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,22 +125,33 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private void onBtnMore() {
 
-        //MyPref2 pref = MyApp.getInstance().getPref(this);
-        //pref.show(new PrefDialog.DismissHandler() {
-        //    @Override
-        //    public void onDialogDismissed() {
-        //        onPreferenceChanged();
-        //    }
-        //});
+        if (!m_user.isLoggedIn()) {  // User not login yet
+            showLogin();
+        } else {                    // User already logging in, show preferences
+            showPreference();
+        }
 
-//        Intent i = new Intent(MainActivity.this, MyPrefrencesActivity.class);
-//        //startActivity(i);
-//        startActivityForResult(i, REQUEST_PREFERENCE);
-
-        m_user.login();
         //m_user.test();//
+    }
 
+    private void showLogin() {
+        MyApp.getInstance().setOnUserLoggedInListener(new MyOnUserLoggedIn()); // listener ditumpangkan dulu
+        m_user.login(new MyOnUserLoggedIn()/*this*/);
+    }
 
+    private void showPreference() {
+
+//        MyPref2 pref = MyApp.getInstance().getPref(this);
+//        pref.show(new PrefDialog.DismissHandler() {
+//            @Override
+//            public void onDialogDismissed() {
+//                onPreferenceChanged();
+//            }
+//        });
+
+        Intent i = new Intent(MainActivity.this, MyPrefrencesActivity.class);
+        //startActivity(i);
+        startActivityForResult(i, Cfg.RC_CHANGE_PREFERENCE);
 
     }
 
@@ -243,12 +249,27 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == REQUEST_PREFERENCE) {
+        //MyApp.getInstance().snackbar(this, "test");
 
-            if (resultCode == MyPrefrencesActivity.RESULT_CODE_PREFERENCES_CHANGED) {
-                restartActivity(MainActivity.this);
-            }
+        switch (requestCode) {
+
+            case Cfg.RC_CHANGE_PREFERENCE:
+                if (resultCode == MyPrefrencesActivity.RESULT_CODE_PREFERENCES_CHANGED) {
+                    restartActivity(MainActivity.this);
+                }
+                break;
+
+            case Cfg.RC_IM_LOGIN:
+                //User user = (User) data.getParcelableExtra("userClass");
+                Log.d(Cfg.MYTAG, "onActivityResult()");
+                break;
+
         }
+//        if (requestCode == REQUEST_PREFERENCE) {
+//            if (resultCode == MyPrefrencesActivity.RESULT_CODE_PREFERENCES_CHANGED) {
+//                restartActivity(MainActivity.this);
+//            }
+//        }
 
     }
 
@@ -318,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(Fragment fragment) {
 
     }
 
@@ -420,17 +441,46 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         //new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setTitleText(getString(R.string.alert_prefence_changed)).show();
 
         // Restart application
-        restartActivity(  MainActivity.this );
+        restartActivity(MainActivity.this);
     }
 
-    private void restartActivity(Activity activity){
-        if (Build.VERSION.SDK_INT >= 11) {
-            activity.recreate();
-        } else {
-            activity.finish();
-            activity.startActivity(activity.getIntent());
+    private void restartActivity(Activity activity) {
+//        if (Build.VERSION.SDK_INT >= 11) {
+//            activity.recreate();
+//        } else {
+//            activity.finish();
+//            activity.startActivity(activity.getIntent());
+//        }
+        // KARENA SERING crash, maka diganti menjadi:
+        // https://stackoverflow.com/a/15564838/3626789
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+
+    }
+
+    class MyOnUserLoggedIn implements User.OnUserLoggedInListener {
+        @Override
+        public void onUserLoggedIn(User user) {
+            //Toast.makeText(getBaseContext(), "MyOnUserLoggedIn implements User.OnUserLoggedIn ", Toast.LENGTH_LONG).show();
+            onUserLoggedIn2(user);
         }
     }
+
+    private void onUserLoggedIn2(User user) {
+        m_user = user;
+
+        String str;
+
+        str = user.name();
+        Log.d(Cfg.MYTAG, str);
+
+        str = m_user.name();
+        Log.d(Cfg.MYTAG, str);
+
+    }
+
 
 }
 

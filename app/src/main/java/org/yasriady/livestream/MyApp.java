@@ -18,6 +18,8 @@ public class MyApp extends ApplicationBase {
     protected RemoteConfig m_rc;
     private User m_user;
 
+    private User.OnUserLoggedInListener m_onUserLoggedInListener;
+
     public MyApp() {
         //Permission1.setPermission(this, Cfg.PERMISSIONS);  // TAK BISA
         m_instance = this;
@@ -79,6 +81,14 @@ public class MyApp extends ApplicationBase {
     public String getRole() {
         final String role = m_user.getRole();
         return role;
+    }
+
+    public void setOnUserLoggedInListener(User.OnUserLoggedInListener listener) {
+        m_onUserLoggedInListener = listener;
+    }
+
+    public User.OnUserLoggedInListener getOnUserLoggedInListener() {
+        return m_onUserLoggedInListener;
     }
 
 }

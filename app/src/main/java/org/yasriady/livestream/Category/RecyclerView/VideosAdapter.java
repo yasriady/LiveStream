@@ -1,6 +1,9 @@
 package org.yasriady.livestream.Category.RecyclerView;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import org.yasriady.livestream.Model.Model4.VideoModel4;
 import org.yasriady.livestream.MyApp;
 import org.yasriady.livestream.R;
+import org.yasriady.livestream.Utility.ItemDialog;
 import org.yasriady.livestream.Utility.RemoteConfig;
 
 import java.util.List;
@@ -126,10 +130,10 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tvVideoId;
         TextView tvDescription;
 
-        TextView tvLive;
+        //TextView tvLive;
         TextView tvPagar1, tvPagar2, tvSlash1;
 
-        ImageButton m_imageButton;
+        ImageButton m_btnMore;
 
         public VideoHolder(View itemView) {
 
@@ -144,14 +148,20 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tvRating = itemView.findViewById(R.id.rating);
             tvChannel = itemView.findViewById(R.id.channel);
             tvVideoId = itemView.findViewById(R.id.video_id);
-            tvLive = itemView.findViewById(R.id.tvLive);
+            //tvLive = itemView.findViewById(R.id.tvLive);
             tvDescription= itemView.findViewById(R.id.description);
 
             tvPagar1 = itemView.findViewById(R.id.pagar1);
             tvPagar2 = itemView.findViewById(R.id.pagar2);
             tvSlash1 = itemView.findViewById(R.id.slash1);
 
-            m_imageButton = itemView.findViewById(R.id.imageButton);
+            m_btnMore = itemView.findViewById(R.id.btnMenu);
+            if (MyApp.getInstance().getUser().isLoggedIn()) {
+                m_btnMore.setVisibility(View.VISIBLE);
+            } else {
+                m_btnMore.setVisibility( View.INVISIBLE );
+
+            }
 
             // Visibility
             //tvTitle
@@ -163,21 +173,23 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //tvChannel
             tvSlash1.setVisibility(View.GONE);
             tvVideoId.setVisibility(View.GONE);
-            tvLive.setVisibility(View.GONE);
-            //m_imageButton.setVisibility(View.GONE);
+            //tvLive.setVisibility(View.GONE);
+            //m_btnMore.setVisibility(View.GONE);
             tvDescription.setVisibility(View.GONE);
 
-            m_imageButton.setOnClickListener(new View.OnClickListener() {
+            m_btnMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onImageButtonClicked();
+                    onBtnMoreMenu();
                 }
             });
 
         }
 
-        private void onImageButtonClicked() {
+        private void onBtnMoreMenu() {
             //Toast.makeText(m_context, "VideoHolder::onImageButtonClicked()", Toast.LENGTH_SHORT).show();
+            ItemDialog dlg = new ItemDialog(m_context);
+            dlg.show();
         }
 
         private boolean haveData(Object obj) {
@@ -298,8 +310,9 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (obj != null) {
                 int i = Integer.valueOf(obj.toString());
                 if (i == 1) {
-                    tvLive.setText("LIVE");
-                    tvLive.setVisibility(View.VISIBLE);
+                    //tvLive.setText("LIVE");
+                    //tvLive.setVisibility(View.VISIBLE);
+                    setDurationToLive();
                 }
             }
 
@@ -308,6 +321,11 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Picasso.with(m_context).load(imgUrl).into(imageView);
             }
 
+        }
+
+        private void setDurationToLive() {
+            tvDuration.setText("LIVE NOW");
+            tvDuration.setBackground(  ContextCompat.getDrawable( m_context, R.drawable.border_live ) );
         }
 
         private String makeImageUrl(final String videoId, final String provider) {

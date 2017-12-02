@@ -5,6 +5,7 @@ package org.yasriady.livestream.Category;
  */
 
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 
 import org.yasriady.livestream.Player.*;
 
@@ -20,6 +21,6 @@ import org.yasriady.livestream.Player.*;
  */
 public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
-    void onFragmentInteraction(Uri uri);
+    void onFragmentInteraction(/*Uri uri*/Fragment fragment);
     //void onFragmentInteraction(org.yasriady.livestream.Player.Base fragment);
 }

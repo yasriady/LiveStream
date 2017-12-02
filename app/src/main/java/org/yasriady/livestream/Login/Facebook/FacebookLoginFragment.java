@@ -16,10 +16,14 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.yasriady.livestream.Category.OnFragmentInteractionListener;
 import org.yasriady.livestream.Login.Base;
 import org.yasriady.livestream.R;
@@ -100,12 +104,15 @@ public class FacebookLoginFragment extends Base {
 
     private void begin(View view) {
 
-        FacebookSdk.sdkInitialize(FacebookSdk.getApplicationContext());
+        if (!FacebookSdk.isInitialized()) {
+            FacebookSdk.sdkInitialize(FacebookSdk.getApplicationContext());
+        }
         m_callbackManager = CallbackManager.Factory.create();
 
         m_loginButton = (LoginButton) view.findViewById(R.id.login_button);
-        //m_loginButton.setReadPermissions("email");
-        m_loginButton.setReadPermissions(Arrays.asList("user_status", "email", "publish_actions"));
+        // https://developers.facebook.com/docs/facebook-login/permissions/
+        m_loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends", "user_status", "email"/*, "publish_actions"*/));
+        // https://stackoverflow.com/a/29379794/3626789
 
         // If using in a fragment
         m_loginButton.setFragment(this);
@@ -113,43 +120,130 @@ public class FacebookLoginFragment extends Base {
 
         // Callback registration
         m_loginButton.registerCallback(m_callbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) {
-                showMessage("onSuccess(LoginResult loginResult)");
+
+                //showMessage("onSuccess(LoginResult loginResult)");
+
                 // App code, lakukan inisialisasi user disini
-                initUser(loginResult);
+                //initUser(loginResult); x_
+
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.v("LoginActivity", response.toString());
+                                // Application code
+                                initUser(object, response);
+                            }
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync(); // diganti menjadi synch, baris berikut ini
+                //request.executeAndWait();  TAK BISA, crash karena sedang ada asynctask lain sedang running
             }
 
             @Override
             public void onCancel() {
                 // App code
+                m_loginButton.setVisibility(View.VISIBLE);
                 showMessage("onCancel()");
             }
 
             @Override
             public void onError(FacebookException exception) {
                 // App code
+                m_loginButton.setVisibility(View.VISIBLE);
                 showMessage("onError(FacebookException exception)");
+            }
+        });
+
+        m_loginButton.setOnClickListener(new LoginButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                m_loginButton.setVisibility(View.INVISIBLE);
             }
         });
 
     }
 
+    private void initUser(JSONObject object, GraphResponse response) {
+
+        String
+                id = "",
+                appId = "",
+                userId = "",
+                password = "",
+                provider = "",
+                name = "",
+                firstname = "",
+                lastname = "",
+                email = "",
+                gender = "",
+                birthday = "",
+                businessName = "",
+                hpNo = "",
+                location = "",
+                pictureUrl = "",
+                privilegeId = "",
+                currentRoleId = "",
+                role = "",
+                enable = "",
+                privileges = "",
+                ts = "";
+
+        try {
+
+            if (!object.isNull("id")) {
+                userId = object.getString("id");
+                m_userModel.setUserid(userId);
+            }
+
+            if (!object.isNull("name")) {
+                name = object.getString("name");
+                m_userModel.setName(name);
+            }
+
+            //firstName = object.getString("firstname");
+            //lastName = object.getString("lastname");
+
+            if (!object.isNull("email")) {
+                email = object.getString("email");
+                m_userModel.setEmail(email);
+            }
+            if (!object.isNull("gender")) {
+                gender = object.getString("gender");
+                m_userModel.setGender(gender);
+            }
+            // ...
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mListener.onFragmentInteraction(this);
+
+    }
+
     private void initUser(LoginResult loginResult) {
-
-
         //AccessToken.getCurrentAccessToken() and Profile.getCurrentProfile().
         m_accessToken = AccessToken.getCurrentAccessToken();
         m_profile = Profile.getCurrentProfile();
 
         Log.d("MYTAG", "test");
+        //final String name = m
+        //m_userModel.setName(name);
 
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(this);
         }
 
 

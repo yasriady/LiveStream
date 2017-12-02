@@ -10,11 +10,15 @@ public class Cfg {
 
     public static final int NUM_VIDEOS = 25;
     public static String DBNAME = "db.sqlite";
-
     public static final String DEVELOPMENT_MODE = "developmentMode";
     public static final String SERVER_INDEX = "serverIndex";
-
     public static final String TEST_DEVICE_ID = "629A74973A0DBC5A96E944CA1C0AE432";
+    public static final String MYTAG = "MYTAG";
+
+    // requestCode
+    public static final int RC_IM_LOGIN = 101;
+    public static final int RC_CHANGE_PREFERENCE = 102;
+
 
     public static enum Category {
 
