@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.yasriady.livestream.Ads.Ads;
 import org.yasriady.livestream.Category.EditorChoiceFragment;
 import org.yasriady.livestream.Category.LiveFragment;
@@ -244,6 +246,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         playIntro("");
 
         showView(true);
+
+        // Joint firebase cloud messaging
+        FirebaseMessaging.getInstance().subscribeToTopic("LiveStreamUser");
+
     }
 
     @Override

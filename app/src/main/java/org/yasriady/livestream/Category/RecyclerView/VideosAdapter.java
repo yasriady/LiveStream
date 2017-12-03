@@ -2,7 +2,6 @@ package org.yasriady.livestream.Category.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +19,8 @@ import org.yasriady.livestream.R;
 import org.yasriady.livestream.Utility.ItemDialog;
 import org.yasriady.livestream.Utility.RemoteConfig;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -149,7 +150,7 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tvChannel = itemView.findViewById(R.id.channel);
             tvVideoId = itemView.findViewById(R.id.video_id);
             //tvLive = itemView.findViewById(R.id.tvLive);
-            tvDescription= itemView.findViewById(R.id.description);
+            tvDescription = itemView.findViewById(R.id.description);
 
             tvPagar1 = itemView.findViewById(R.id.pagar1);
             tvPagar2 = itemView.findViewById(R.id.pagar2);
@@ -159,7 +160,7 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (MyApp.getInstance().getUser().isLoggedIn()) {
                 m_btnMore.setVisibility(View.VISIBLE);
             } else {
-                m_btnMore.setVisibility( View.INVISIBLE );
+                m_btnMore.setVisibility(View.INVISIBLE);
 
             }
 
@@ -226,20 +227,31 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             // Duration
             obj = videoModel.getVideoDuration();
             if (haveData(obj)) {
-                String videoDuration = obj.toString();
-                tvDuration.setText(videoDuration);
-                tvDuration.setVisibility(View.VISIBLE);
+                String strDuration = getTvDuration(obj.toString());
+                tvDuration.setText(strDuration);
+                //tvDuration.setVisibility(View.VISIBLE);
             } else {
                 //tvDuration.setVisibility(View.GONE);
                 //tvPagar1.setVisibility(View.GONE);
+            }
+
+            // Video Datetime
+            obj = videoModel.getVideoDatetime();
+            if (haveData(obj)) {
+                String strDatetime = obj.toString();
+                tvView.setText(strDatetime);
+                //tvView.setVisibility(View.VISIBLE);
+            } else {
+                //tvView.setVisibility(View.GONE);
+                //tvPagar2.setVisibility(View.GONE);
             }
 
             // Views
             obj = videoModel.getVideoView();
             if (haveData(obj)) {
                 String videoView = obj.toString();
-                tvView.setText(videoView);
-                tvView.setVisibility(View.VISIBLE);
+                tvView.setText(videoView + " views");
+                //tvView.setVisibility(View.VISIBLE);
             } else {
                 //tvView.setVisibility(View.GONE);
                 //tvPagar2.setVisibility(View.GONE);
@@ -250,11 +262,12 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (haveData(obj)) {
                 String channel = obj.toString();
                 tvChannel.setText(channel);
-                tvChannel.setVisibility(View.VISIBLE);
+                //tvChannel.setVisibility(View.VISIBLE);
             } else {
                 //tvChannel.setVisibility(View.GONE);
                 //tvSlash1.setVisibility(View.GONE);
             }
+            tvChannel.setVisibility(View.GONE);
 
             // Description
             obj = videoModel.getVideoDescription();
@@ -265,8 +278,6 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 //tvDescription.setVisibility(View.GONE);
             }
-
-
 
 
 //            obj = videoModel.getProvider();
@@ -323,9 +334,32 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         }
 
+        private String getTvDuration(String s) {
+            String str = "__:__:__";
+            Double dbl = Double.valueOf(s);
+            BigDecimal dec = BigDecimal.valueOf(dbl);
+            final int[] i = splitToComponentTimes(dec);
+            str = String.format("%02d:%02d:%02d", i[0], i[1], i[2]);
+            return str;
+        }
+
+        // https://stackoverflow.com/a/6118964/3626789, masih ada kesahalah hitung. Perlu diperiksa lagi nanti
+        public int[] splitToComponentTimes(BigDecimal biggy) {
+            long longVal = biggy.longValue();
+            int hours = (int) longVal / 3600;
+            int remainder = (int) longVal - hours * 3600;
+            int mins = remainder / 60;
+            remainder = remainder - mins * 60;
+            int secs = remainder;
+
+            int[] ints = {hours, mins, secs};
+            return ints;
+        }
+
         private void setDurationToLive() {
             tvDuration.setText("LIVE NOW");
-            tvDuration.setBackground(  ContextCompat.getDrawable( m_context, R.drawable.border_live ) );
+            tvDuration.setBackground(ContextCompat.getDrawable(m_context, R.drawable.border_live));
+            tvDuration.setTextColor(Color.RED);
         }
 
         private String makeImageUrl(final String videoId, final String provider) {

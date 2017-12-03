@@ -29,5 +29,6 @@
 
     <string name="facebook_app_id">531273377217445</string>
     <string name="fb_login_protocol_scheme">fb531273377217445</string>
+    <string name="beta_version">Beta Version</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import org.yasriady.livestream.Model.Model4.VideoModel4;
 import org.yasriady.livestream.MyApp;
@@ -43,12 +44,16 @@ public class Base extends Fragment{
     Context m_context;
 
     private String m_tableName;
+    View m_view;
 
     protected void begin(View view, final String tableName) {
+
+        showProgressBar();
 
         m_context = getContext();
         m_recyclerView = view.findViewById(R.id.rvVideo);
         m_videos = new ArrayList<>();
+        m_view = view;
 
         m_tableName = tableName;
 
@@ -90,6 +95,7 @@ public class Base extends Fragment{
                 if (response.isSuccessful()) {
                     m_videos.addAll(response.body());
                     m_adapter.notifyDataChanged();
+                    hideProgressBar();
                 } else {
                     Log.e(TAG, "Response Error" + String.valueOf(response.code()));
                 }
@@ -141,6 +147,16 @@ public class Base extends Fragment{
             }
         });
 
+    }
+
+    private void showProgressBar() {
+        ProgressBar progressBar = m_view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        ProgressBar progressBar = m_view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
     }
 
 
