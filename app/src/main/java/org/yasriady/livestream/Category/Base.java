@@ -48,7 +48,7 @@ public class Base extends Fragment{
 
     protected void begin(View view, final String tableName) {
 
-        showProgressBar();
+        showProgressBar( view);
 
         m_context = getContext();
         m_recyclerView = view.findViewById(R.id.rvVideo);
@@ -95,7 +95,7 @@ public class Base extends Fragment{
                 if (response.isSuccessful()) {
                     m_videos.addAll(response.body());
                     m_adapter.notifyDataChanged();
-                    hideProgressBar();
+                    hideProgressBar(m_view);
                 } else {
                     Log.e(TAG, "Response Error" + String.valueOf(response.code()));
                 }
@@ -149,13 +149,13 @@ public class Base extends Fragment{
 
     }
 
-    private void showProgressBar() {
-        ProgressBar progressBar = m_view.findViewById(R.id.progressBar);
+    private void showProgressBar(View view) {
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar() {
-        ProgressBar progressBar = m_view.findViewById(R.id.progressBar);
+    private void hideProgressBar(View view) {
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
     }
 
