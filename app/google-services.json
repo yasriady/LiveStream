@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "525687328871",
+    "firebase_url": "https://ustadz-somad-streaming.firebaseio.com",
+    "project_id": "ustadz-somad-streaming",
+    "storage_bucket": "ustadz-somad-streaming.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525687328871:android:f70ee178d98d9f47",
+        "android_client_info": {
+          "package_name": "org.yasriady.ustadzsomadstreaming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525687328871-lo2s5d2ej9okfuqfcl23qqtodml1sfog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.yasriady.ustadzsomadstreaming",
+            "certificate_hash": "9153038be8033fb09ccba8b064ffe951500eda5d"
+          }
+        },
+        {
+          "client_id": "525687328871-2p599puoffukoe1tlbhe8pk5bttsnbip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAJr3jZCCLU7AqdiPm7jh3ElSSkg6jsSQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525687328871-2p599puoffukoe1tlbhe8pk5bttsnbip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

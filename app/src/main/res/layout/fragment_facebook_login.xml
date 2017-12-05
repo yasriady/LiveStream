@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="org.yasriady.livestream.Login.Facebook.FacebookLoginFragment">
+    tools:context="org.yasriady.ustadzsomadstreaming.Login.Facebook.FacebookLoginFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

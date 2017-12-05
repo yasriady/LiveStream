@@ -1,0 +1,25 @@
+{
+  "versionName": "1.0",
+  "forceUpdate": false,
+  "updateUrl": "",
+  "adsType": 0,
+  "srvList": [
+    "http://192.168.43.15",
+    "http://192.168.43.117",
+    "https://dbstore.sourceforge.io",
+    "https://dbstore.000webhost.com",
+    "https://dbstore.sourceforge.net"
+  ],
+  "catHome": { "show":true, "label":"Home" },
+  "catNewest": { "show":false, "label":"Newest" },
+  "catLive": { "show":false, "label":"Live" },
+  "catPopular": { "show":true, "label":"Popular" },
+  "catEditorChoice": { "show":true, "label":"Ceramah Pilihan" },
+  "catSearch": { "show":false, "label":"Search" },
+  "catMoreUstadz": { "show":true, "label":"More Ustadz" },
+
+  "initialCategoryTab": 0,
+  "imageSliderDuration": 7050,
+  "imageSliderShowDescription": false,
+  "youtubeThumbnail": "http://i3.ytimg.com/vi/{videoId}/0.jpg"
+}

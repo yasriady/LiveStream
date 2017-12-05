@@ -1,0 +1,33 @@
+{
+  "versionName": "1.0",
+  "forceUpdate": false,
+  "updateUrl": "",
+  "x_showBanner": true,
+  "x_introUrl": "https://dbstore.sourceforge.io/livestream/introUrl.php",
+  "adsType": 0,
+  "srvList": [
+    "http://192.168.43.15",
+    "http://192.168.43.117",
+    "https://dbstore.sourceforge.io",
+    "https://dbstore.000webhost.com",
+    "https://dbstore.sourceforge.net"
+  ],
+  "showHOME": true,
+  "labelHOME": "Home",
+  "showNEWEST": false,
+  "labelHOME": "Newest",
+  "showLIVE": false,
+  "labelLIVE": "Live",
+  "showPOPULAR": true,
+  "labelPOPULAR": "Popular",
+  "showEDITOR_CHOICE": true,
+  "labelEDITOR_CHOICE": "Editor Choice",
+  "showSEARCH": false,
+  "labelSEARCH": "Search",
+  "showMORE_USTADZ": true,
+  "labelMORE_USTADZ": "More Ustadz",
+  "initialCategoryTab": 0,
+  "imageSliderDuration": 7050,
+  "imageSliderShowDescription": false,
+  "youtubeThumbnail": "http://i3.ytimg.com/vi/{videoId}/0.jpg"
+}

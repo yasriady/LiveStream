@@ -5,6 +5,6 @@
     android:id="@+id/loginFragmentHere"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.yasriady.livestream.Login.LoginActivity">
+    tools:context="org.yasriady.ustadzsomadstreaming.Login.LoginActivity">
 
 </android.support.constraint.ConstraintLayout>

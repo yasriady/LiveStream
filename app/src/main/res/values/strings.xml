@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LiveStream</string>
+    <string name="app_name">Ustadz Somad Streaming</string>
     <string name="player_error">Error initializing YouTube player: %s</string>
 
     <!-- TODO: Remove or change this placeholder text -->

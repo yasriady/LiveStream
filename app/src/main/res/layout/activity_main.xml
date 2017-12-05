@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.yasriady.livestream.MainActivity">
+    tools:context="org.yasriady.ustadzsomadstreaming.MainActivity">
 
 
     <LinearLayout
@@ -51,7 +51,7 @@
 
             </LinearLayout>
 
-            <org.yasriady.livestream.Ads.Ads
+            <org.yasriady.ustadzsomadstreaming.Ads.Ads
                 android:id="@+id/myAds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-            </org.yasriady.livestream.Ads.Ads>
+            </org.yasriady.ustadzsomadstreaming.Ads.Ads>
 
             <LinearLayout
                 android:id="@+id/content"
@@ -73,7 +73,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <org.yasriady.livestream.Utility.MyImageButton
+                    <org.yasriady.ustadzsomadstreaming.Utility.MyImageButton
                         android:id="@+id/btnMore"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
@@ -86,7 +86,7 @@
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_more_vert" />
 
-                    <org.yasriady.livestream.Content.SlidingTabLayout
+                    <org.yasriady.ustadzsomadstreaming.Content.SlidingTabLayout
                         android:id="@+id/tab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -94,10 +94,10 @@
                         android:layout_toEndOf="@+id/btnMore"
                         android:layout_toRightOf="@+id/btnMore">
 
-                    </org.yasriady.livestream.Content.SlidingTabLayout>
+                    </org.yasriady.ustadzsomadstreaming.Content.SlidingTabLayout>
                 </LinearLayout>
 
-                <org.yasriady.livestream.Category.NOT_USED.CustomViewPager
+                <org.yasriady.ustadzsomadstreaming.Category.NOT_USED.CustomViewPager
                     android:id="@+id/viewPager"
 
                     android:layout_width="match_parent"
@@ -111,7 +111,7 @@
 
         </LinearLayout>
 
-        <org.yasriady.livestream.Utility.Statusbar
+        <org.yasriady.ustadzsomadstreaming.Utility.Statusbar
             android:id="@+id/statusbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
