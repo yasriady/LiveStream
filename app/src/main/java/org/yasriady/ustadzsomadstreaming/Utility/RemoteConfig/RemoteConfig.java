@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.ListView;
 
 import org.yasriady.ustadzsomadstreaming.Ads.Ads;
 import org.yasriady.ustadzsomadstreaming.Cfg;
@@ -91,6 +92,10 @@ public class RemoteConfig {
         return adsType;
     }
 
+    public int getAdsLocation() {
+        return m_rcModel.getAdsLocation();
+    }
+
     public String updateUrl() {
         return m_rcModel.getUpdateUrl();
     }
@@ -154,10 +159,14 @@ public class RemoteConfig {
         return m_rcModel;
     }
 
+    public ListItem getListItem() {
+        return getModel().getListItem();
+    }
+
     // 2
     static class ApiClient {
 
-        public static final String BASE_URL = Cfg.REMOTE_CONFIG_SERVER + "/app/UstadzSomadStreaming/";   // JANGAN LUPA SLASH diakhir
+        public static final String BASE_URL = Cfg.REMOTE_CONFIG_SERVER + "/" + Cfg.SERVER_DIR  +"/";   // JANGAN LUPA SLASH diakhir
         private static Retrofit retrofit = null;
 
         public static Retrofit getClient() {
@@ -186,196 +195,6 @@ public class RemoteConfig {
         // contoh
         @GET("movie/{id}")
         Call<RemoteConfigModel> x_getMovieDetails(@Path("id") int id, @Query("api_key") String apiKey);
-    }
-
-    // 4
-    public class RemoteConfigModel {
-
-        private String versionName;
-        private Boolean forceUpdate;
-        private String updateUrl;
-        private Integer adsType;
-        private List<String> srvList = null;
-        private Category catHome;
-        private Category catNewest;
-        private Category catLive;
-        private Category catPopular;
-        private Category catEditorChoice;
-        private Category catSearch;
-        private Category catMoreUstadz;
-        private Integer initialCategoryTab;
-        private Integer imageSliderDuration;
-        private Boolean imageSliderShowDescription;
-        private String youtubeThumbnail;
-        private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-        private String getVersionName() {
-            return versionName;
-        }
-
-        public void setVersionName(String versionName) {
-            this.versionName = versionName;
-        }
-
-        public Boolean getForceUpdate() {
-            return forceUpdate;
-        }
-
-        public void setForceUpdate(Boolean forceUpdate) {
-            this.forceUpdate = forceUpdate;
-        }
-
-        public String getUpdateUrl() {
-            return updateUrl;
-        }
-
-        public void setUpdateUrl(String updateUrl) {
-            this.updateUrl = updateUrl;
-        }
-
-        public Integer getAdsType() {
-            return adsType;
-        }
-
-        public void setAdsType(Integer adsType) {
-            this.adsType = adsType;
-        }
-
-        public List<String> getSrvList() {
-            return srvList;
-        }
-
-        public void setSrvList(List<String> srvList) {
-            this.srvList = srvList;
-        }
-
-        public Category getCatHome() {
-            return catHome;
-        }
-
-        public void setCatHome(Category catHome) {
-            this.catHome = catHome;
-        }
-
-        public Category getCatNewest() {
-            return catNewest;
-        }
-
-        public void setCatNewest(Category catNewest) {
-            this.catNewest = catNewest;
-        }
-
-        public Category getCatLive() {
-            return catLive;
-        }
-
-        public void setCatLive(Category catLive) {
-            this.catLive = catLive;
-        }
-
-        public Category getCatPopular() {
-            return catPopular;
-        }
-
-        public void setCatPopular(Category catPopular) {
-            this.catPopular = catPopular;
-        }
-
-        public Category getCatEditorChoice() {
-            return catEditorChoice;
-        }
-
-        public void setCatEditorChoice(Category catEditorChoice) {
-            this.catEditorChoice = catEditorChoice;
-        }
-
-        public Category getCatSearch() {
-            return catSearch;
-        }
-
-        public void setCatSearch(Category catSearch) {
-            this.catSearch = catSearch;
-        }
-
-        public Category getCatMoreUstadz() {
-            return catMoreUstadz;
-        }
-
-        public void setCatMoreUstadz(Category catMoreUstadz) {
-            this.catMoreUstadz = catMoreUstadz;
-        }
-
-        public Integer getInitialCategoryTab() {
-            return initialCategoryTab;
-        }
-
-        public void setInitialCategoryTab(Integer initialCategoryTab) {
-            this.initialCategoryTab = initialCategoryTab;
-        }
-
-        public Integer getImageSliderDuration() {
-            return imageSliderDuration;
-        }
-
-        public void setImageSliderDuration(Integer imageSliderDuration) {
-            this.imageSliderDuration = imageSliderDuration;
-        }
-
-        public Boolean getImageSliderShowDescription() {
-            return imageSliderShowDescription;
-        }
-
-        public void setImageSliderShowDescription(Boolean imageSliderShowDescription) {
-            this.imageSliderShowDescription = imageSliderShowDescription;
-        }
-
-        public String getYoutubeThumbnail() {
-            return youtubeThumbnail;
-        }
-
-        public void setYoutubeThumbnail(String youtubeThumbnail) {
-            this.youtubeThumbnail = youtubeThumbnail;
-        }
-
-        public Map<String, Object> getAdditionalProperties() {
-            return this.additionalProperties;
-        }
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
-    }
-
-    public class Category {
-
-        private Boolean show;
-        private String label;
-        private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-        public Boolean getShow() {
-            return show;
-        }
-
-        public void setShow(Boolean show) {
-            this.show = show;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-
-        public Map<String, Object> getAdditionalProperties() {
-            return this.additionalProperties;
-        }
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
     }
 
     public interface RemoteConfigListener {

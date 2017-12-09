@@ -81,11 +81,7 @@ public class HomeFragment extends Base  {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        begin(view);
-    }
-
-    private void begin(View view) {
-        //super.begin(view, TABLENAME);
+        super.begin(view, TABLENAME);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -15,9 +15,12 @@
 
     <!-- AdMob ad unit IDs -->
 
-    <string name="app_id">ca-app-pub-0333447002362481~3199593854</string>
-    <string name="admob_banner">ca-app-pub-0333447002362481/1259826220</string>
-    <string name="admob_interstitial">ca-app-pub-0333447002362481/9417394130</string>
+    <string name="app_id">ca-app-pub-0333447002362481~3431052781</string>
+
+    <string name="admob_banner">ca-app-pub-0333447002362481/6910955188</string>
+    <string name="admob_interstitial">ca-app-pub-0333447002362481/6527811803</string>
+
+
     <string name="video_thumbnail">Video thumbnail</string>
     <string name="live">LIVE</string>
     <string name="video_title">Video Title</string>
@@ -30,5 +33,7 @@
     <string name="facebook_app_id">531273377217445</string>
     <string name="fb_login_protocol_scheme">fb531273377217445</string>
     <string name="beta_version">Beta Version</string>
+    <string name="more_info_1"> Aplikasi ini sedang dalam pengembangan.</string>
+    <string name="more_info_2">Jika ditemukan bug, error atau program crash, mohon dilaporkan kepada Kami.</string>
 
 </resources>

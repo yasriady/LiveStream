@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.yasriady.ustadzsomadstreaming.Category.OnFragmentInteractionListener;
+import org.yasriady.ustadzsomadstreaming.Cfg;
 import org.yasriady.ustadzsomadstreaming.Player.Base;
 import org.yasriady.ustadzsomadstreaming.R;
 
@@ -131,11 +132,11 @@ public class IntroFragment extends Base {
         m_webView.getSettings().setJavaScriptEnabled(true);
         m_webView.setWebViewClient(new WebViewClient());
 
-        String introUrl = m_remoteConfig.getServer() + "/livestream/intro/introUrl.php";
+        String introUrl = m_remoteConfig.getServer() + "/" + Cfg.SERVER_DIR + "/intro/introUrl.php";
         m_webView.loadUrl(introUrl);
 
         ImageView imageView = view.findViewById(R.id.imageView);
-        String imgUrl = m_remoteConfig.getServer() + "/livestream/intro/mqdefault.jpg";
+        String imgUrl = m_remoteConfig.getServer() + "/" + Cfg.SERVER_DIR + "/intro/mqdefault.jpg";
         Picasso.with(getContext()).load(imgUrl).into(imageView);
 
         // https://stackoverflow.com/q/33046093/3626789
@@ -155,7 +156,7 @@ public class IntroFragment extends Base {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener  || context instanceof OnIntroFragmentLoadedListener ) {
+        if (context instanceof OnFragmentInteractionListener || context instanceof OnIntroFragmentLoadedListener) {
             mListener = (OnFragmentInteractionListener) context;
             m_introFragmentLoadedListener = (OnIntroFragmentLoadedListener) context;
         } else {
@@ -197,7 +198,7 @@ public class IntroFragment extends Base {
 //            }
 
 //            showProgressDialog();
-            final String FILE_BASE_URL = m_remoteConfig.getServer() + "/livestream/intro/"; // "http://192.168.43.117/livestream/intro/";
+            final String FILE_BASE_URL = m_remoteConfig.getServer() + "/" + Cfg.SERVER_DIR + "/intro/"; // "http://192.168.43.117/livestream/intro/";
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(FILE_BASE_URL)
                     .build();
@@ -409,7 +410,7 @@ public class IntroFragment extends Base {
         }
 
         private String makeValue(String str) {
-            String value = m_remoteConfig.getServer() + "/livestream/intro/sliderImages/" + str;
+            String value = m_remoteConfig.getServer() + "/" + Cfg.SERVER_DIR + "/intro/sliderImages/" + str;
             return value;
         }
 

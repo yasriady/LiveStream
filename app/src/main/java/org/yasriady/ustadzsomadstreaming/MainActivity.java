@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -19,12 +20,13 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.yasriady.ustadzsomadstreaming.Ads.Ads;
 import org.yasriady.ustadzsomadstreaming.Category.EditorChoiceFragment;
+import org.yasriady.ustadzsomadstreaming.Category.HomeFragment;
 import org.yasriady.ustadzsomadstreaming.Category.LiveFragment;
 import org.yasriady.ustadzsomadstreaming.Category.MoreUstadzFragment;
 import org.yasriady.ustadzsomadstreaming.Category.NOT_USED.CustomViewPager;
@@ -37,15 +39,17 @@ import org.yasriady.ustadzsomadstreaming.Category.SearchFragment;
 import org.yasriady.ustadzsomadstreaming.Content.SlidingTabLayout;
 import org.yasriady.ustadzsomadstreaming.Login.User;
 import org.yasriady.ustadzsomadstreaming.Model.Model4.VideoModel4;
-import org.yasriady.ustadzsomadstreaming.OnlineCount.OnlineCount;
 import org.yasriady.ustadzsomadstreaming.Player.FacebookFragment;
 import org.yasriady.ustadzsomadstreaming.Player.Intro.IntroFragment;
 import org.yasriady.ustadzsomadstreaming.Player.YoutubeFragment;
+import org.yasriady.ustadzsomadstreaming.Utility.MyAlertDialog;
 import org.yasriady.ustadzsomadstreaming.Utility.MyImageButton;
 import org.yasriady.ustadzsomadstreaming.Utility.Network;
 import org.yasriady.ustadzsomadstreaming.Utility.PermissionsUtils;
 import org.yasriady.ustadzsomadstreaming.Utility.RemoteConfig.RemoteConfig;
 import org.yasriady.ustadzsomadstreaming.Utility.Statusbar;
+
+import java.util.List;
 
 //import org.yasriady.ustadzsomadstreaming.NOT_USED.RemoteConfig;
 
@@ -79,9 +83,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private RemoteConfig m_rc;
     private Statusbar m_statusbar;
     private MyImageButton m_btnMore;
-    private OnlineCount m_onlineCount;
+    //private OnlineCount m_onlineCount;
     private User m_user;
     private Drawable m_background;
+
+    private List<String> m_playHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,15 +98,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         // End application if internet not available
         if (!Network.isOnline(this)) {
-            MyApp.getInstance().toast("Internet connection is not available...");
-            finish();
+            MyApp.getInstance().toast("Error::No internet connection...");
+            //finish();
+        } else {
+            //MyApp.getInstance().toast(this, "Internet connection available...");
+            //MyApp.getInstance().snackbar(this, "Internet connection available...");
+            //m_onlineCount = new OnlineCount();
+            // TODO 1
+            checkPermission();
         }
-        //MyApp.getInstance().toast(this, "Internet connection available...");
-        MyApp.getInstance().snackbar (this, "Internet connection available...");
-        m_onlineCount = new OnlineCount();
-
-        // TODO 1
-        checkPermission();
     }
 
     private void checkPermission() {
@@ -157,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     private void onPermissionDenied() {
-        Toast.makeText(this, "Insufficient permission, please restart application!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Insufficient permission, please restart application!", Toast.LENGTH_LONG).show();
     }
 
 //    private void begin_1_OK() { // No longer used
@@ -324,7 +330,19 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     }
 
+    private void alertToUpdate_x() {
+        MyAlertDialog dlg = new MyAlertDialog(this);
+        dlg.setTitle("New version available");
+        //setMessage("Please, update application to new version to continue.")
+        dlg.show();
+    }
+
     private void alertToUpdate() {
+
+
+//        long currentUnixTime = System.currentTimeMillis();
+//        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
+//        long nextReminder = SP.getLong(Cfg.NEXT_REMINDER, currentUnixTime);
 
         //AlertDialog dialog = new AlertDialog.Builder(this)
         //        .setTitle("New version available")
@@ -353,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         AlertDialog dlg = new AlertDialog.Builder(this)
                 .setTitle("New version available")
-                .setMessage("Please, update application to new version to continue.")
+                .setMessage("Please update application to new version for continue...")
                 .setPositiveButton("Update",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -369,24 +387,41 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (m_rc.forceUpdate()) {
-                                finish();
-                            } else {
-                                mulai();
-                            }
+                            //if (m_rc.forceUpdate()) {
+                            //    finish();
+                            //} else {
+                            mulai();
+                            //}
                         }
                     });
+
+            dlg.setButton(DialogInterface.BUTTON_NEUTRAL, "Remind me later",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // update delay until 3 days
+                            remindMeLater();
+                        }
+                    }
+            );
+
         }
 
         dlg.show();
 
     }
 
+    private void remindMeLater() {
+
+        mulai();
+    }
+
     private void mulai() {
+
         Ads.Adstype adsType = m_rc.getAdsType();
         if (adsType != Ads.Adstype.GONE) {
             m_ads = findViewById(R.id.myAds);
-            m_ads.begin();
+            m_ads.begin(m_rc.getAdsType(), m_rc.getAdsLocation(), (LinearLayout) findViewById(R.id.layoutContent));
         }
         //m_btnPlayYoutube.performClick();
         //playIntro(m_rc.getIntroUrl());
@@ -545,25 +580,25 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         int i = m_pages.size();
 
         if (m_rc.showCategory_HOME()) {
-            m_pages.put(i++, NewestFragment.newInstance( m_rc.getModel().getCatHome().getLabel()  /*getResources().getString(R.string.home)*/, ""));
+            m_pages.put(i++, HomeFragment.newInstance(m_rc.getModel().getCatHome().getLabel()  /*getResources().getString(R.string.home)*/, ""));
         }
         if (m_rc.showCategory_NEWEST()) {
-            m_pages.put(i++, NewestFragment.newInstance( m_rc.getModel().getCatNewest().getLabel() /*getResources().getString(R.string.newest)*/, ""));
+            m_pages.put(i++, NewestFragment.newInstance(m_rc.getModel().getCatNewest().getLabel() /*getResources().getString(R.string.newest)*/, ""));
         }
         if (m_rc.showCategory_LIVE()) {
-            m_pages.put(i++, LiveFragment.newInstance( m_rc.getModel().getCatLive().getLabel() /*getResources().getString(R.string.live_now)*/, Cfg.Category.LIVE));
+            m_pages.put(i++, LiveFragment.newInstance(m_rc.getModel().getCatLive().getLabel() /*getResources().getString(R.string.live_now)*/, Cfg.Category.LIVE));
         }
         if (m_rc.showCategory_POPULAR()) {
-            m_pages.put(i++, PopularFragment.newInstance( m_rc.getModel().getCatPopular().getLabel()   /*getResources().getString(R.string.popular)*/, ""));
+            m_pages.put(i++, PopularFragment.newInstance(m_rc.getModel().getCatPopular().getLabel()   /*getResources().getString(R.string.popular)*/, ""));
         }
         if (m_rc.showCategory_MORE_USTADZ()) {
-            m_pages.put(i++, MoreUstadzFragment.newInstance(  m_rc.getModel().getCatMoreUstadz().getLabel()   /*getResources().getString(R.string.more_ustadz)*/, ""));
+            m_pages.put(i++, MoreUstadzFragment.newInstance(m_rc.getModel().getCatMoreUstadz().getLabel()   /*getResources().getString(R.string.more_ustadz)*/, ""));
         }
         if (m_rc.showCategory_EDITOR_CHOICE()) {
             m_pages.put(i++, EditorChoiceFragment.newInstance(m_rc.getModel().getCatEditorChoice().getLabel()   /*getResources().getString(R.string.editor_choice)*/, ""));
         }
         if (m_rc.showCategory_SEARCH()) {
-            m_pages.put(i++, SearchFragment.newInstance( m_rc.getModel().getCatSearch().getLabel()  /*getResources().getString(R.string.search)*/, ""));
+            m_pages.put(i++, SearchFragment.newInstance(m_rc.getModel().getCatSearch().getLabel()  /*getResources().getString(R.string.search)*/, ""));
         }
 
     }
@@ -592,7 +627,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     protected void onDestroy() {
         if (m_ads != null) m_ads.onDestroy();
-        m_onlineCount.count("down");
+        //if (m_onlineCount != null) m_onlineCount.count("down");
         super.onDestroy();
     }
 
@@ -605,7 +640,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override
     protected void onResume() {
         super.onResume();
-        m_onlineCount.count("up");
+        //if (m_onlineCount != null) m_onlineCount.count("up");
         if (m_ads != null) m_ads.onResume();
     }
 
@@ -662,6 +697,28 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
      */
     class PrepareApplicationToBegin {
 
+    }
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        //Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        MyApp.getInstance().toast("Please click BACK again to exit");
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
 }

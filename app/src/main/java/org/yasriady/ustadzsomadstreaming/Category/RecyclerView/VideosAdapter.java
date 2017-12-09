@@ -17,10 +17,18 @@ import org.yasriady.ustadzsomadstreaming.Model.Model4.VideoModel4;
 import org.yasriady.ustadzsomadstreaming.MyApp;
 import org.yasriady.ustadzsomadstreaming.R;
 import org.yasriady.ustadzsomadstreaming.Utility.ItemDialog;
+import org.yasriady.ustadzsomadstreaming.Utility.RemoteConfig.ListItem;
 import org.yasriady.ustadzsomadstreaming.Utility.RemoteConfig.RemoteConfig;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by dedy on 11/26/17.
@@ -118,6 +126,9 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public static class VideoHolder extends RecyclerView.ViewHolder {
 
+        RemoteConfig m_rc;
+        ListItem m_lc; //ListItemConfig
+
         // Untuk apa ini?
         public VideoModel4 m_videoModel;
 
@@ -129,6 +140,7 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tvChannel;
         TextView tvVideoId;
         TextView tvDescription;
+        TextView tvPublishedAt;
 
         //TextView tvLive;
         TextView tvPagar1, tvPagar2, tvSlash1;
@@ -136,8 +148,9 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ImageButton m_btnMore;
 
         public VideoHolder(View itemView) {
-
             super(itemView);
+
+            m_lc = MyApp.getInstance().getRc().getListItem();
 
             // Do initial setup
 
@@ -150,6 +163,7 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tvVideoId = itemView.findViewById(R.id.video_id);
             //tvLive = itemView.findViewById(R.id.tvLive);
             tvDescription = itemView.findViewById(R.id.description);
+            tvPublishedAt = itemView.findViewById(R.id.publishedAt);
 
             tvPagar1 = itemView.findViewById(R.id.pagar1);
             tvPagar2 = itemView.findViewById(R.id.pagar2);
@@ -164,18 +178,22 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
 
             // Visibility
-            //tvTitle
+            tvTitle.setVisibility( m_lc.getTitleVisibility() );
             //tvDuration
             //tvPagar1
             //tvView
-            tvPagar2.setVisibility(View.GONE);
-            tvRating.setVisibility(View.GONE);
+            tvPagar2.setVisibility(  m_lc.getRatingVisibility() );
+            tvRating.setVisibility( m_lc.getRatingVisibility() );
             //tvChannel
-            tvSlash1.setVisibility(View.GONE);
-            tvVideoId.setVisibility(View.GONE);
+
+            tvSlash1.setVisibility(m_lc.getIdVisibility());
+            tvSlash1.setVisibility(m_lc.getRatingVisibility() );
+
+            tvVideoId.setVisibility( m_lc.getIdVisibility());
             //tvLive.setVisibility(View.GONE);
             //m_btnMore.setVisibility(View.GONE);
-            tvDescription.setVisibility(View.GONE);
+            tvDescription.setVisibility( m_lc.getDescriptionVisibility()  );
+            tvChannel.setVisibility( m_lc.getChannelTitleVisibility()  );
 
             m_btnMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -203,6 +221,7 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         void bindData(VideoModel4 videoModel) {
+
             //tvTitle.setText(videoModel.title);
             //tvRating.setText("Rating " + videoModel.rating);
 
@@ -238,18 +257,33 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             obj = videoModel.getVideoDatetime();
             if (haveData(obj)) {
                 String strDatetime = obj.toString();
-                tvView.setText(strDatetime);
-                //tvView.setVisibility(View.VISIBLE);
+                // https://stackoverflow.com/a/7882065/3626789
+                String start_dt =  strDatetime ;//"2017-12-03T12:21:00.000Z";
+                //DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                Date date = null;
+                try {
+                    date = (Date) formatter.parse(start_dt);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String finalString = newFormat.format(date);
+                System.out.println(finalString);
+
+                tvPublishedAt.setText(finalString);
+
+                //tvPublishedAt.setVisibility(View.VISIBLE);
             } else {
-                //tvView.setVisibility(View.GONE);
+                //tvPublishedAt.setVisibility(View.GONE);
                 //tvPagar2.setVisibility(View.GONE);
             }
 
             // Views
             obj = videoModel.getVideoView();
             if (haveData(obj)) {
-                String videoView = obj.toString();
-                tvView.setText(videoView + " views");
+                String videoView = obj.toString() + " views";
+                tvView.setText(videoView);
                 //tvView.setVisibility(View.VISIBLE);
             } else {
                 //tvView.setVisibility(View.GONE);
@@ -266,7 +300,7 @@ public class VideosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 //tvChannel.setVisibility(View.GONE);
                 //tvSlash1.setVisibility(View.GONE);
             }
-            tvChannel.setVisibility(View.GONE);
+            //tvChannel.setVisibility(View.GONE);
 
             // Description
             obj = videoModel.getVideoDescription();

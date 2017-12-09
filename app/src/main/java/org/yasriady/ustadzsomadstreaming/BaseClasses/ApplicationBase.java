@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.yasriady.ustadzsomadstreaming.Utility.MySnackbar;
 import org.yasriady.ustadzsomadstreaming.Utility.MyToast;
 
 /**
@@ -22,9 +23,9 @@ public class ApplicationBase extends Application {
         MyToast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    public void toast(Context context, String message) {
-        MyToast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
+    //public void toast(Context context, String message) {
+    //    MyToast.makeText(context, message, Toast.LENGTH_LONG).show();
+    //}
 
     public void snackbar(Context context, String message) {
         //MainActivity mainActivity = (MainActivity) context;
@@ -34,7 +35,7 @@ public class ApplicationBase extends Application {
 
         AppCompatActivity activity= (AppCompatActivity) context;
         View view = activity.findViewById(android.R.id.content);
-        Snackbar snackbar = Snackbar.make(/*coordinatorLayout*/view, message, Snackbar.LENGTH_LONG);
+        MySnackbar snackbar = MySnackbar.make(/*coordinatorLayout*/view, message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 

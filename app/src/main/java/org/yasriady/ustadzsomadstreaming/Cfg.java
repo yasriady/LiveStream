@@ -6,13 +6,15 @@ package org.yasriady.ustadzsomadstreaming;
 
 public class Cfg {
 
+    public static final String REMOTE_CONFIG_SERVER = "https://dbstore.sourceforge.io";
     //public static final String REMOTE_PREF_FILE = "https://raw.githubusercontent.com/yasriady/dbstore/master/app/LiveStream/preference.json";
     public static final String REMOTE_PREF_FILE = "https://dbstore.sourceforge.io/app/LiveStream/x_preference.json"; // x_
-    public static final String REMOTE_CONFIG_SERVER = "https://dbstore.sourceforge.io";
 
+    public static final String SERVER_DIR = "UstadzSomadStreaming";
     public static final int NUM_VIDEOS = 25;
     public static String DBNAME = "db.sqlite";
     public static final String DEVELOPMENT_MODE = "developmentMode";
+    public static final String NEXT_REMINDER = "nextReminder";
     public static final String SERVER_INDEX = "serverIndex";
     public static final String TEST_DEVICE_ID = "629A74973A0DBC5A96E944CA1C0AE432";
     public static final String MYTAG = "MYTAG";

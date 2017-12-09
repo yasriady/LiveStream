@@ -51,11 +51,12 @@ public class MyToast {
             toast = Toast.makeText(m_context, m_resId, m_duration);
         }
 
-        TextView tv = toast.getView().findViewById(android.R.id.message);
-        tv.setTextColor(Color.WHITE);
-        //toast.getView().setBackgroundColor(Color.RED);
-        //toast.getView().setBackground(m_context.getDrawable(R.drawable.background_splash));
-        toast.getView().setBackground(m_context.getResources() .getDrawable(R.drawable.background_splash) );
+        // Ini ok
+        //TextView tv = toast.getView().findViewById(android.R.id.message);
+        //tv.setTextColor(Color.WHITE);
+        ////toast.getView().setBackgroundColor(Color.RED);
+        ////toast.getView().setBackground(m_context.getDrawable(R.drawable.background_splash));
+        //toast.getView().setBackground(m_context.getResources() .getDrawable(R.drawable.background_splash) );
 
         toast.show();
 
@@ -75,3 +76,43 @@ public class MyToast {
 //toast.show();
 //final int DURATION = Toast.LENGTH_LONG;
 //Toast.makeText(getApplicationContext(), message, DURATION).show();
+
+
+// Toast with layout, https://stackoverflow.com/a/6687695/3626789
+
+//<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+//        android:id="@+id/toast_layout_root"
+//        android:orientation="horizontal"
+//        android:layout_width="fill_parent"
+//        android:layout_height="fill_parent"
+//        android:padding="10dp"
+//        android:background="#DAAA"
+//        >
+//<ImageView android:id="@+id/image"
+//        android:layout_width="wrap_content"
+//        android:layout_height="fill_parent"
+//        android:layout_marginRight="10dp"
+//        />
+//<TextView android:id="@+id/text"
+//        android:layout_width="wrap_content"
+//        android:layout_height="fill_parent"
+//        android:textColor="#FFF"
+//        />
+//</LinearLayout>
+//
+//        -
+//
+//        LayoutInflater inflater = getLayoutInflater();
+//        View layout = inflater.inflate(R.layout.toast_layout,
+//        (ViewGroup) findViewById(R.id.toast_layout_root));
+//
+//        ImageView image = (ImageView) layout.findViewById(R.id.image);
+//        image.setImageResource(R.drawable.android);
+//        TextView text = (TextView) layout.findViewById(R.id.text);
+//        text.setText("Hello! This is a custom toast!");
+//
+//        Toast toast = new Toast(getApplicationContext());
+//        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+//        toast.setDuration(Toast.LENGTH_LONG);
+//        toast.setView(layout);
+//        toast.show();

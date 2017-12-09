@@ -25,7 +25,7 @@ import static org.yasriady.ustadzsomadstreaming.Cfg.Category.NEWEST;
 public class MoreUstadzFragment extends Base  {
 
     /* Configure these consts: */
-    private final String TABLENAME = "video_newest";
+    private final String TABLENAME = "video_more_ustadz";
     //private final String TITLE = getResources().getString(R.string.live_now);
     private final Cfg.Category CATEGORY = NEWEST;
 
@@ -85,7 +85,7 @@ public class MoreUstadzFragment extends Base  {
     }
 
     private void begin(View view) {
-        //super.begin(view, TABLENAME);
+        super.begin(view, TABLENAME);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

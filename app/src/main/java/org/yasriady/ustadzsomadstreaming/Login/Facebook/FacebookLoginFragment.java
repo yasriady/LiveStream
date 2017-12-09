@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -26,7 +27,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.yasriady.ustadzsomadstreaming.Category.OnFragmentInteractionListener;
 import org.yasriady.ustadzsomadstreaming.Login.Base;
+import org.yasriady.ustadzsomadstreaming.MyApp;
 import org.yasriady.ustadzsomadstreaming.R;
+import org.yasriady.ustadzsomadstreaming.Utility.RemoteConfig.ApplicationAbout;
+import org.yasriady.ustadzsomadstreaming.Utility.RemoteConfig.RemoteConfig;
 
 import java.util.Arrays;
 
@@ -100,6 +104,31 @@ public class FacebookLoginFragment extends Base {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         begin(view);
+
+        setAbout(view);
+
+    }
+
+    private void setAbout(View view) {
+        TextView tvTitle = view.findViewById(R.id.tvTitle);
+        TextView tvSubtitle = view.findViewById(R.id.tvSubtitle);
+        TextView tvMoreInfo1 = view.findViewById(R.id.tvMoreInfo1);
+        TextView tvMoreInfo2 = view.findViewById(R.id.tvMoreInfo2);
+
+        ApplicationAbout appAbout = MyApp.getInstance().getRc().getModel().getApplicationAbout();
+
+        if (appAbout != null) {
+            final String title = appAbout.getTitle();
+            final String subTitle = appAbout.getSubTitle();
+            final String moreInfo1 = appAbout.getMoreInfo1();
+            final String moreInfo2 = appAbout.getMoreInfo2();
+
+            tvTitle.setText(title);
+            tvSubtitle.setText(subTitle);
+            tvMoreInfo1.setText(moreInfo1);
+            tvMoreInfo2.setText(moreInfo2);
+        }
+
     }
 
     private void begin(View view) {

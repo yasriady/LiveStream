@@ -5,6 +5,9 @@ import android.util.Log;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.yasriady.ustadzsomadstreaming.Cfg;
+import org.yasriady.ustadzsomadstreaming.MyApp;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +56,10 @@ public class OnlineCount {
     // 2
     static class ApiClient {
 
-        public static final String BASE_URL = "http://192.168.43.15/livestream/record/";   // JANGAN LUPA SLASH diakhir
+
+        //public static final String BASE_URL = "http://192.168.43.15/livestream/record/";   // JANGAN LUPA SLASH diakhir
+        public static final String BASE_URL = MyApp.getInstance().getRc().getServer() + "/" +  Cfg.SERVER_DIR + "/record/";;   // JANGAN LUPA SLASH diakhir
+
         private static Retrofit retrofit = null;
 
         public static Retrofit getClient() {

@@ -1,5 +1,7 @@
 package org.yasriady.ustadzsomadstreaming.Category.RecyclerView;
 
+import org.yasriady.ustadzsomadstreaming.Cfg;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -21,7 +23,7 @@ public class ServiceGenerator {
         if (server.lastIndexOf("/") != (server.length() - 1)) {
             server = server + "/";
         }
-        server = server + "livestream/record/";
+        server = server + Cfg.SERVER_DIR + "/record/";
 
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)

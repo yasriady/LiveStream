@@ -113,9 +113,9 @@
                 android:id="@+id/pagar2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:layout_toEndOf="@+id/views"
-                android:layout_toRightOf="@+id/views"
+                android:layout_below="@+id/publishedAt"
+                android:layout_toEndOf="@+id/video_id"
+                android:layout_toRightOf="@+id/video_id"
                 android:text=" | "
                 android:textSize="12sp" />
 
@@ -123,9 +123,10 @@
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
+                android:layout_below="@+id/publishedAt"
                 android:layout_toEndOf="@+id/pagar2"
                 android:layout_toRightOf="@+id/pagar2"
+                android:paddingLeft="5dp"
                 android:text="8.5"
                 android:textSize="12sp" />
 
@@ -158,6 +159,7 @@
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentStart="false"
                 android:layout_below="@+id/publishedAt"
+                android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/slash1"
                 android:layout_toRightOf="@+id/slash1"
                 android:text="video_id"

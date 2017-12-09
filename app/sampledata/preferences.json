@@ -1,25 +1,77 @@
 {
-  "versionName": "1.0",
-  "forceUpdate": false,
-  "updateUrl": "",
-  "adsType": 0,
-  "srvList": [
-    "http://192.168.43.15",
-    "http://192.168.43.117",
-    "https://dbstore.sourceforge.io",
-    "https://dbstore.000webhost.com",
-    "https://dbstore.sourceforge.net"
-  ],
-  "catHome": { "show":true, "label":"Home" },
-  "catNewest": { "show":false, "label":"Newest" },
-  "catLive": { "show":false, "label":"Live" },
-  "catPopular": { "show":true, "label":"Popular" },
-  "catEditorChoice": { "show":true, "label":"Ceramah Pilihan" },
-  "catSearch": { "show":false, "label":"Search" },
-  "catMoreUstadz": { "show":true, "label":"More Ustadz" },
+    "applicationAbout": {
+        "title": "Ustadz Somad Streaming",
+        "subTitle": "Beta version",
+        "moreInfo1": "",
+        "moreInfo2": ""
+    },
+    "versionName": "1.0",
+    "forceUpdate": false,
+    "updateUrl": "",
+    "adsType": 0,
+    "adsLocation": 2,
+    "srvList": [
+        "https://dbstore.sourceforge.io",
+        "http://192.168.43.15",
+        "https://dbstore.000webhost.com",
+        "http://192.168.43.117",
+        "https://dbstore.sourceforge.net"
+    ],
+    "catHome": {
+        "show": true,
+        "label": "Home"
+    },
+    "catNewest": {
+        "show": false,
+        "label": "Newest"
+    },
+    "catLive": {
+        "show": false,
+        "label": "Live"
+    },
+    "catPopular": {
+        "show": true,
+        "label": "Popular"
+    },
+    "catEditorChoice": {
+        "show": true,
+        "label": "Pilihan"
+    },
+    "catSearch": {
+        "show": false,
+        "label": "Search"
+    },
+    "catMoreUstadz": {
+        "show": true,
+        "label": "More Ustadz"
+    },
+    "initialCategoryTab": 0,
+    "imageSliderDuration": 7050,
+    "imageSliderShowDescription": false,
+    "youtubeThumbnail": "http://i3.ytimg.com/vi/{videoId}/0.jpg",
+    "listItem": {
+        "titleVisibility": 0,
+        "idVisibility": 8,
+        "descriptionVisibility": 8,
+        "publishedAtVisibility": 0,
+        "channelTitleVisibility": 8,
+        "durationVisibility": 0,
+        "viewCountVisibility": 0,
+        "likeCountVisibility": 8,
+        "dislikeCountVisibility": 8,
+        "favoriteCountVisibility": 8,
+        "commentCountVisibility": 8,
+        "ratingVisibility": 8
+    },
 
-  "initialCategoryTab": 0,
-  "imageSliderDuration": 7050,
-  "imageSliderShowDescription": false,
-  "youtubeThumbnail": "http://i3.ytimg.com/vi/{videoId}/0.jpg"
+    "customMessage": {
+        "msg1": "Aplikasi ini sedang dalam pengembangan.",
+        "msg2": "Jika ditemukan error, bug atau program crash, mohon dilaporkan kepada Kami melalui email: mobile.iot@gmail.com",
+        "msg3": "customMessage msg3",
+        "msg4": "customMessage msg4",
+        "msg5": "customMessage msg5",
+        "msg6": "customMessage msg6",
+        "msg7": "customMessage msg7"
+    }
 }
+

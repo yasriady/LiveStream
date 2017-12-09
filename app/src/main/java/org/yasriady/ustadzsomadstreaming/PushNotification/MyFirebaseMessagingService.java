@@ -10,12 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.yasriady.ustadzsomadstreaming.Cfg;
 import org.yasriady.ustadzsomadstreaming.MainActivity;
 import org.yasriady.ustadzsomadstreaming.R;
 
@@ -24,7 +26,7 @@ import org.yasriady.ustadzsomadstreaming.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MYFIREBASEINSTANCEIDSERVICE";
+    private static final String TAG = Cfg.MYTAG //"MYFIREBASEINSTANCEIDSERVICE";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -48,6 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(String messageBody) {
+        int icon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.drawable.icon: R.mipmap.ic_launcher;
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -55,8 +58,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("FCM Message")
+                .setSmallIcon(icon)
+                .setContentTitle( getResources().getString(R.string.app_name)  /*"FCM Message"*/)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

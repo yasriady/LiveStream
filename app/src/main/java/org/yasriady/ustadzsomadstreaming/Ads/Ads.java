@@ -23,6 +23,9 @@ import org.yasriady.ustadzsomadstreaming.R;
 public class Ads extends LinearLayout {
 
     private AdView m_adView;
+    private Ads.Adstype m_adsType;
+    private int m_adsLocation;
+    private LinearLayout m_adsContainer;
 
     public static enum Adstype {
 
@@ -68,7 +71,22 @@ public class Ads extends LinearLayout {
 //        super(context, attrs, defStyleAttr, defStyleRes);
 //    }
 
-    public void begin() {
+    public void begin(final Ads.Adstype adsType, final int adsLocation, LinearLayout container) {
+
+        m_adsType = adsType;
+        m_adsLocation = adsLocation;
+        m_adsContainer = container;
+        // POSISI Ads BELUM BISA
+        switch (adsLocation) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2 :
+                m_adsContainer.removeViewAt(1);
+                m_adsContainer.addView(this, 1);
+                break;
+        }
 
         // 11-29 08:29:53.563 3686-3686/org.yasriady.livestream I/Ads:
         // Use AdRequest.Builder.addTestDevice("629A74973A0DBC5A96E944CA1C0AE432") to get test ads on this device.
@@ -82,14 +100,15 @@ public class Ads extends LinearLayout {
         boolean bDevelMode;
         //bDevelMode = MyApp.getInstance().getPref(getContext()).get(Cfg.DEVELOPMENT_MODE, true);  //MyApp.getInstance().getSharedPrefBoolean(Cfg.DEVELOPMENT_MODE, true);
         // pindah menggunakan preference activity
-        SharedPreferences SP =
-                PreferenceManager.getDefaultSharedPreferences(getContext());
-        bDevelMode = SP.getBoolean(Cfg.DEVELOPMENT_MODE, true);
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getContext());
+        bDevelMode = SP.getBoolean(Cfg.DEVELOPMENT_MODE, false);
 
         AdRequest adRequest = null;
         final String TESTDEVICESTR = Cfg.TEST_DEVICE_ID;  // "629A74973A0DBC5A96E944CA1C0AE432";// From my device Advance i5C
 
         //AdRequest adRequest = new AdRequest.Builder().build();
+        // Paksa bDevelMode menjadi false
+        //bDevelMode = false;
         if (bDevelMode) {   // Development mode
             adRequest = new AdRequest.Builder()
                     .addTestDevice(TESTDEVICESTR)
@@ -99,11 +118,11 @@ public class Ads extends LinearLayout {
                     .build();
         }
 
-        String msg = "Ads displayed in production mode.";
-        if (adRequest.isTestDevice(getContext())) {
-            msg = "Ads displayed in development mode.";
-        }
-        MyApp.getInstance().snackbar(getContext(), msg);
+        //String msg = "Ads displayed in production mode.";
+        //if (adRequest.isTestDevice(getContext())) {
+        //    msg = "Ads displayed in development mode.";
+        //}
+        //MyApp.getInstance().snackbar(getContext(), msg);
 
         m_adView.loadAd(adRequest);
     }

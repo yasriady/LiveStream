@@ -8,9 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.yasriady.ustadzsomadstreaming.Category.OnFragmentInteractionListener;
 import org.yasriady.ustadzsomadstreaming.Cfg;
 
 /**
@@ -23,15 +21,15 @@ public class PermissionsUtils {
     private Context m_context;
 
     //public static final int REQUEST_PERMISSION_MULTIPLE = 9;
-    public static final int REQUEST_PERMISSION_CAMERA = 1;
-    public static final int REQUEST_PERMISSION_LOCATION = 2;
+    //public static final int REQUEST_PERMISSION_CAMERA = 1;
+    //public static final int REQUEST_PERMISSION_LOCATION = 2;
     public static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 6;
     //public static final int REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 7;
     public static final int REQUEST_PERMISSION_INTERNET = 4;                    // Tak masuk dalam requestPermission
     public static final int REQUEST_PERMISSION_ACCESS_NETWORK_STATE = 5;        // Tak masuk dalam requestPermission
 
-    private boolean m_permCamera;
-    private boolean m_permAccessLocation;
+    //private boolean m_permCamera;
+    //private boolean m_permAccessLocation;
     //private boolean m_permReadExternalStorage;
     private boolean m_permWriteExternalStorage;
     private boolean m_permInternet;
@@ -55,13 +53,13 @@ public class PermissionsUtils {
     public boolean requestPermissions1() {
 
         Activity activity = (Activity) m_context;
-        boolean result1 = requestPermission(activity, Manifest.permission.CAMERA, REQUEST_PERMISSION_CAMERA);
-        boolean result2 = requestPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSION_LOCATION);
+        //boolean result1 = requestPermission(activity, Manifest.permission.CAMERA, REQUEST_PERMISSION_CAMERA);
+        //boolean result2 = requestPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_PERMISSION_LOCATION);
         boolean result3 = requestPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
         //boolean result4 = requestPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_PERMISSION_READ_EXTERNAL_STORAGE);
         boolean result5 = requestPermission(activity, Manifest.permission.INTERNET, REQUEST_PERMISSION_INTERNET);
         boolean result6 = requestPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE, REQUEST_PERMISSION_ACCESS_NETWORK_STATE);
-        boolean result = result1 && result2 && result3 && /*result4 &&*/ result5 && result6;
+        boolean result = /*result1 && result2 && */result3 && /*result4 &&*/ result5 && result6;
         return result;
     }
 
@@ -86,26 +84,26 @@ public class PermissionsUtils {
 
         switch (requestCode) {
 
-            case REQUEST_PERMISSION_CAMERA:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //do here
-                    //Toast.makeText(context, "Permission granted!", Toast.LENGTH_LONG).show();
-                    m_permCamera = true;
-                    Log.d(Cfg.MYTAG, "Permission granted for REQUEST_PERMISSION_CAMERA");
-                } else {
-                    //Toast.makeText(context, "Permission denied!", Toast.LENGTH_LONG).show();
-                    m_permCamera = false;
-                }
-                break;
-            case REQUEST_PERMISSION_LOCATION:
-
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    m_permAccessLocation = true;
-                    Log.d(Cfg.MYTAG, "Permission granted for REQUEST_PERMISSION_LOCATION");
-                } else {
-                    m_permAccessLocation = false;
-                }
-                break;
+//            case REQUEST_PERMISSION_CAMERA:
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    //do here
+//                    //Toast.makeText(context, "Permission granted!", Toast.LENGTH_LONG).show();
+//                    m_permCamera = true;
+//                    Log.d(Cfg.MYTAG, "Permission granted for REQUEST_PERMISSION_CAMERA");
+//                } else {
+//                    //Toast.makeText(context, "Permission denied!", Toast.LENGTH_LONG).show();
+//                    m_permCamera = false;
+//                }
+//                break;
+//            case REQUEST_PERMISSION_LOCATION:
+//
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    m_permAccessLocation = true;
+//                    Log.d(Cfg.MYTAG, "Permission granted for REQUEST_PERMISSION_LOCATION");
+//                } else {
+//                    m_permAccessLocation = false;
+//                }
+//                break;
             case REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d(Cfg.MYTAG, "Permission granted for REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE");
@@ -148,7 +146,7 @@ public class PermissionsUtils {
 //                m_permWriteExternalStorage && m_permInternet && m_permAccessNetworkState;
 
         // Hanya critical permission
-        m_permissionResult = m_permCamera && m_permAccessLocation && m_permWriteExternalStorage;
+        m_permissionResult = /*m_permCamera && m_permAccessLocation && */m_permWriteExternalStorage;
 
 
         if (m_permissionResult) {
